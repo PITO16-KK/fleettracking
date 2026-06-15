@@ -1,0 +1,168 @@
+<ion-menu contentId="main-admin-content" type="overlay">
+  <ion-header class="ion-no-border">
+    <ion-toolbar class="admin-menu-header">
+      <div class="logo-box">
+        <ion-icon name="car-sport"></ion-icon>
+      </div>
+      <ion-title>ROAMIE PANEL</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content class="admin-sidebar">
+    <ion-list lines="none">
+      <ion-item button routerLink="/admin" routerDirection="root" routerLinkActive="active-item">
+        <ion-icon name="grid-outline" slot="start"></ion-icon>
+        <ion-label>Overview</ion-label>
+      </ion-item>
+      <ion-item button routerLink="/admin/cars" routerDirection="root" routerLinkActive="active-item">
+        <ion-icon name="car-sport-outline" slot="start"></ion-icon>
+        <ion-label>Fleet Inventory</ion-label>
+      </ion-item>
+      <ion-item button routerLink="/admin/rentals" routerDirection="root" routerLinkActive="active-item">
+        <ion-icon name="receipt-outline" slot="start"></ion-icon>
+        <ion-label>Rental Orders</ion-label>
+      </ion-item>
+      <ion-item button routerLink="/admin/tracking" routerDirection="root" routerLinkActive="active-item">
+        <ion-icon name="map-outline" slot="start"></ion-icon>
+        <ion-label>Live Tracking</ion-label>
+      </ion-item>
+      <ion-item button routerLink="/admin/history" routerDirection="root" routerLinkActive="active-item">
+        <ion-icon name="time-outline" slot="start"></ion-icon>
+        <ion-label>Logs & History</ion-label>
+      </ion-item>
+      
+      <div class="sidebar-footer">
+        <ion-item button (click)="logout()" class="logout-item">
+          <ion-icon name="log-out-outline" slot="start"></ion-icon>
+          <ion-label>Sign Out</ion-label>
+        </ion-item>
+      </div>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+
+<div class="ion-page" id="main-admin-content">
+  <ion-header class="ion-no-border">
+    <ion-toolbar class="admin-toolbar">
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <div class="header-search">
+        <ion-icon name="search-outline"></ion-icon>
+        <input type="text" placeholder="Search data, rentals, or cars...">
+      </div>
+      <ion-buttons slot="end">
+        <div class="admin-profile">
+          <div class="text">
+            <span class="name">Admin Roamie</span>
+            <span class="role">Super Admin</span>
+          </div>
+          <ion-avatar>
+            <img src="https://i.pravatar.cc/150?u=admin">
+          </ion-avatar>
+        </div>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content class="ion-padding admin-content-bg">
+    <div class="dashboard-header animate-up">
+      <h1>System Dashboard</h1>
+      <p>Welcome back! Here's what's happening with your fleet today.</p>
+    </div>
+
+    <!-- Stats Grid -->
+    <div class="admin-stats-grid animate-up">
+      <div class="stat-card-new roamie-card">
+        <div class="icon-circle blue"><ion-icon name="car"></ion-icon></div>
+        <div class="content">
+          <span class="label">Total Vehicles</span>
+          <span class="value">48</span>
+          <span class="trend up">+4.5% from last month</span>
+        </div>
+      </div>
+      <div class="stat-card-new roamie-card">
+        <div class="icon-circle green"><ion-icon name="key"></ion-icon></div>
+        <div class="content">
+          <span class="label">Active Bookings</span>
+          <span class="value">12</span>
+          <span class="trend up">+12% peak today</span>
+        </div>
+      </div>
+      <div class="stat-card-new roamie-card">
+        <div class="icon-circle purple"><ion-icon name="cash"></ion-icon></div>
+        <div class="content">
+          <span class="label">Total Revenue</span>
+          <span class="value">Rp 85M</span>
+          <span class="trend up">+2.1% growth</span>
+        </div>
+      </div>
+      <div class="stat-card-new roamie-card">
+        <div class="icon-circle cyan"><ion-icon name="pulse"></ion-icon></div>
+        <div class="content">
+          <span class="label">GPS Health</span>
+          <span class="value">98.5%</span>
+          <span class="trend">Operational</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="admin-charts-grid animate-up">
+      <div class="roamie-card premium-chart">
+        <div class="chart-header">
+          <h3>Fleet Performance</h3>
+          <ion-select value="today" mode="ios">
+            <ion-select-option value="today">Today</ion-select-option>
+            <ion-select-option value="week">This Week</ion-select-option>
+          </ion-select>
+        </div>
+        <div class="chart-box">
+          <canvas id="revenueBarChart"></canvas>
+        </div>
+      </div>
+      
+      <div class="roamie-card premium-chart mini">
+        <h3>Vehicle Availability</h3>
+        <div class="chart-box">
+          <canvas id="fleetPieChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recent Activity -->
+    <div class="roamie-card data-table-card animate-up">
+      <div class="card-head">
+        <h3>Recent Transactions</h3>
+        <ion-button fill="clear">Export PDF</ion-button>
+      </div>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Order ID</th>
+              <th>Customer</th>
+              <th>Vehicle</th>
+              <th>Date</th>
+              <th>Amount</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let rental of recentRentals">
+              <td><strong>#{{ rental.id }}</strong></td>
+              <td>John Customer</td>
+              <td>{{ rental.carName }}</td>
+              <td>{{ rental.startDate }}</td>
+              <td class="revenue">Rp {{ rental.totalPrice | number }}</td>
+              <td>
+                <span class="status-pill" [class]="rental.status.toLowerCase()">
+                  {{ rental.status }}
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </ion-content>
+</div>

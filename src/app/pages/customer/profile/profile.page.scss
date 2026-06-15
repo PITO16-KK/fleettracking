@@ -1,0 +1,127 @@
+ion-header {
+  padding-top: env(safe-area-inset-top);
+}
+
+ion-toolbar {
+  --background: var(--roamie-bg);
+  color: #ffffff;
+}
+
+ion-title {
+  color: #ffffff;
+}
+
+ion-button {
+  color: #ffffff;
+}
+
+.profile-header {
+  text-align: center;
+  padding: 40px 20px;
+  background: var(--roamie-bg);
+
+  .avatar-container {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 20px;
+    
+    img {
+      width: 100%;
+      height: 100%;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      /* Smooth rounded corners (squircle-like) without any visible border */
+      border-radius: 18px;
+      box-shadow: var(--roamie-shadow);
+    }
+
+    .edit-badge {
+      position: absolute;
+      bottom: 6px;
+      right: 6px;
+      background: var(--ion-color-primary);
+      color: white;
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      /* remove visible border so the badge sits flush on the avatar */
+      box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+    }
+
+    .avatar-container {
+      cursor: pointer;
+    }
+  }
+
+  h2 {
+    font-size: 24px;
+    font-weight: 800;
+    margin: 0;
+    color: #ffffff;
+  }
+
+  p {
+    margin: 4px 0 0;
+    color: rgba(255,255,255,0.7);
+    font-weight: 600;
+  }
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  padding: 0 10px;
+  margin-top: -30px;
+
+  .stat-item {
+    margin: 6px;
+    padding: 14px 8px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+    .value {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--ion-color-primary);
+    }
+
+    .label {
+      font-size: 9px;
+      font-weight: 700;
+      color: rgba(255,255,255,0.6);
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+  }
+}
+
+.actions-list {
+  padding: 16px;
+
+  ion-list {
+    background: transparent;
+  }
+
+  ion-item {
+    margin: 0 0 12px;
+    --padding-start: 12px;
+    
+    ion-icon[slot="start"] {
+      font-size: 24px;
+      margin-right: 16px;
+    }
+
+    ion-label {
+      font-weight: 600;
+      color: #ffffff;
+    }
+  }
+}

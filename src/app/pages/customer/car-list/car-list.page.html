@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/customer/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>All Vehicles</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="page-shell">
+    <div class="filter-row">
+      <ion-segment [value]="selectedCategory" (ionChange)="selectCategory($event.detail.value?.toString() || 'All')">
+        <ion-segment-button *ngFor="let category of categories" [value]="category">
+          {{ category }}
+        </ion-segment-button>
+      </ion-segment>
+      <ion-searchbar
+        placeholder="Search cars"
+        [(ngModel)]="searchTerm"
+        (ionInput)="applyFilters()"
+        debounce="250">
+      </ion-searchbar>
+    </div>
+
+    <div class="car-grid">
+      <div class="car-card roamie-card" *ngFor="let car of filteredCars" (click)="navigateToDetail(car)">
+        <img [src]="car.image" alt="{{ car.brand }} {{ car.model }}">
+        <div class="card-content">
+          <h3>{{ car.brand }} {{ car.model }}</h3>
+          <p>{{ car.type }} · {{ car.transmission }}</p>
+          <div class="price-row">
+            <span>Rp {{ car.price | number }}/day</span>
+            <span class="status">{{ car.status }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="empty-state" *ngIf="filteredCars.length === 0">
+        <h3>No cars match your filters.</h3>
+        <p>Try removing a category or search term.</p>
+      </div>
+    </div>
+  </div>
+</ion-content>

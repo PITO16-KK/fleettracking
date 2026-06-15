@@ -1,0 +1,48 @@
+.page-shell {
+  padding: 16px;
+}
+
+.filter-row {
+  display: grid;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.car-grid {
+  display: grid;
+  gap: 16px;
+  padding-bottom: 24px;
+}
+
+.car-card {
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.car-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.card-content {
+  padding: 16px;
+}
+
+.price-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 12px;
+}
+
+.status {
+  font-size: 0.85rem;
+  color: var(--ion-color-medium);
+}
+
+.empty-state {
+  text-align: center;
+  padding: 40px 16px;
+  color: var(--ion-color-medium);
+}

@@ -1,0 +1,91 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()">
+        <ion-icon name="chevron-back" slot="icon-only" color="light"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Edit Profile</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="edit-container animate-up">
+    <!-- Avatar Section -->
+    <div class="avatar-section" (click)="changeAvatar()">
+      <div class="avatar-wrapper">
+        <img [src]="tempAvatar" alt="User Avatar">
+        <div class="change-btn">
+          <ion-icon name="camera"></ion-icon>
+        </div>
+      </div>
+      <p>Change Profile Photo</p>
+    </div>
+
+    <!-- Form Section -->
+    <form [formGroup]="profileForm" (ngSubmit)="saveProfile()">
+      <div class="form-section">
+        
+        <!-- Full Name -->
+        <div class="input-group">
+          <ion-item lines="none" class="roamie-card" [class.invalid]="profileForm.get('name')?.invalid && profileForm.get('name')?.touched">
+            <ion-icon name="person-outline" slot="start"></ion-icon>
+            <ion-label position="floating">Full Name</ion-label>
+            <ion-input formControlName="name" placeholder="Enter your full name"></ion-input>
+          </ion-item>
+          <div class="error-msg" *ngIf="profileForm.get('name')?.invalid && profileForm.get('name')?.touched">
+            <span *ngIf="profileForm.get('name')?.errors?.['required']">Name is required</span>
+            <span *ngIf="profileForm.get('name')?.errors?.['minlength']">Minimum 3 characters</span>
+          </div>
+        </div>
+
+        <!-- Email -->
+        <div class="input-group">
+          <ion-item lines="none" class="roamie-card" [class.invalid]="profileForm.get('email')?.invalid && profileForm.get('email')?.touched">
+            <ion-icon name="mail-outline" slot="start"></ion-icon>
+            <ion-label position="floating">Email Address</ion-label>
+            <ion-input formControlName="email" type="email" placeholder="Enter your email"></ion-input>
+          </ion-item>
+          <div class="error-msg" *ngIf="profileForm.get('email')?.invalid && profileForm.get('email')?.touched">
+            <span *ngIf="profileForm.get('email')?.errors?.['required']">Email is required</span>
+            <span *ngIf="profileForm.get('email')?.errors?.['email']">Enter a valid email</span>
+          </div>
+        </div>
+
+        <!-- Phone -->
+        <div class="input-group">
+          <ion-item lines="none" class="roamie-card" [class.invalid]="profileForm.get('phone')?.invalid && profileForm.get('phone')?.touched">
+            <ion-icon name="call-outline" slot="start"></ion-icon>
+            <ion-label position="floating">Phone Number</ion-label>
+            <ion-input formControlName="phone" type="tel" placeholder="Enter your phone number"></ion-input>
+          </ion-item>
+          <div class="error-msg" *ngIf="profileForm.get('phone')?.invalid && profileForm.get('phone')?.touched">
+            <span *ngIf="profileForm.get('phone')?.errors?.['pattern']">Numbers, spaces, + and - only</span>
+          </div>
+        </div>
+
+        <!-- Address -->
+        <div class="input-group">
+          <ion-item lines="none" class="roamie-card">
+            <ion-icon name="location-outline" slot="start"></ion-icon>
+            <ion-label position="floating">Address</ion-label>
+            <ion-textarea formControlName="address" placeholder="Enter your address" rows="2"></ion-textarea>
+          </ion-item>
+        </div>
+
+      </div>
+
+      <!-- Footer Buttons -->
+      <div class="footer-actions">
+        <ion-button expand="block" type="submit" class="save-btn" [disabled]="profileForm.invalid || !isDirty || isLoading">
+          <ion-spinner *ngIf="isLoading" name="crescent"></ion-spinner>
+          <span *ngIf="!isLoading">Save Changes</span>
+        </ion-button>
+        
+        <ion-button expand="block" fill="clear" color="light" class="cancel-btn" (click)="goBack()">
+          Cancel
+        </ion-button>
+      </div>
+    </form>
+  </div>
+</ion-content>

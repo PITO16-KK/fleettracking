@@ -1,0 +1,100 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/customer/profile"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Notifikasi</ion-title>
+    <ion-buttons slot="end" *ngIf="notifications.length > 0">
+      <ion-button (click)="markAllAsRead()" title="Tandai semua dibaca">
+        <ion-icon name="checkmark-done-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+      <ion-button (click)="clearNotifications()" title="Hapus semua">
+        <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- Page Header -->
+  <div class="page-header ion-padding-horizontal mt-16">
+    <h2>Pemberitahuan</h2>
+    <p>Lihat status perjalanan, jadwal serah terima, dan pembaruan sewa mobil Anda.</p>
+  </div>
+
+  <!-- Filter Category Chips -->
+  <div class="filter-scroll">
+    <div 
+      class="filter-chip" 
+      [class.active]="activeFilter === 'all'" 
+      (click)="selectFilter('all')">
+      Semua
+    </div>
+    <div 
+      class="filter-chip" 
+      [class.active]="activeFilter === 'pickup'" 
+      (click)="selectFilter('pickup')">
+      <ion-icon name="car-outline"></ion-icon>
+      Pickup
+    </div>
+    <div 
+      class="filter-chip" 
+      [class.active]="activeFilter === 'return'" 
+      (click)="selectFilter('return')">
+      <ion-icon name="return-down-back-outline"></ion-icon>
+      Kembali
+    </div>
+    <div 
+      class="filter-chip" 
+      [class.active]="activeFilter === 'info'" 
+      (click)="selectFilter('info')">
+      <ion-icon name="information-circle-outline"></ion-icon>
+      Info
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="loading" class="state-container animate-fade">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Memuat notifikasi...</p>
+  </div>
+
+  <!-- Empty State -->
+  <div *ngIf="!loading && filteredNotifications.length === 0" class="state-container animate-fade">
+    <div class="empty-icon-box">
+      <ion-icon name="notifications-off-outline"></ion-icon>
+    </div>
+    <h3>Tidak ada notifikasi</h3>
+    <p>Notifikasi baru tentang aktivitas rental Anda akan muncul di sini.</p>
+  </div>
+
+  <!-- Notifications List -->
+  <div class="notifications-list ion-padding animate-up" *ngIf="!loading && filteredNotifications.length > 0">
+    <div 
+      class="notification-card" 
+      *ngFor="let notification of filteredNotifications" 
+      [class.unread]="!isRead(notification.id)">
+      
+      <!-- Icon Indicator based on type -->
+      <div class="notification-icon" [ngClass]="notification.type">
+        <ion-icon *ngIf="notification.type === 'pickup'" name="car-sport"></ion-icon>
+        <ion-icon *ngIf="notification.type === 'return'" name="alert-circle"></ion-icon>
+        <ion-icon *ngIf="notification.type === 'info'" name="information-circle"></ion-icon>
+      </div>
+
+      <!-- Main details -->
+      <div class="notification-body">
+        <div class="title-row">
+          <h4>{{ notification.title }}</h4>
+          <!-- Unread badge/dot -->
+          <span class="unread-dot" *ngIf="!isRead(notification.id)"></span>
+        </div>
+        <p class="desc">{{ notification.description }}</p>
+        <div class="meta-row">
+          <span class="date">{{ notification.date }}</span>
+          <span class="rental-id">Sewa {{ notification.rentalId }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

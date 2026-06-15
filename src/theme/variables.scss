@@ -1,0 +1,48 @@
+/** Ionic CSS Variables **/
+:root {
+  /** primary **/
+  --ion-color-primary: #9D50BB;
+  --ion-color-primary-rgb: 157, 80, 187;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #8a46a5;
+  --ion-color-primary-tint: #a761c2;
+
+  /** secondary **/
+  --ion-color-secondary: #FF8E53;
+  --ion-color-secondary-rgb: 255, 142, 83;
+  --ion-color-secondary-contrast: #ffffff;
+  --ion-color-secondary-contrast-rgb: 255, 255, 255;
+  --ion-color-secondary-shade: #e07d49;
+  --ion-color-secondary-tint: #ff9964;
+
+  /** Roamie Dark Premium **/
+  --roamie-bg: #0F0C29;
+  --roamie-surface: #1B1B3A;
+  --roamie-gradient: linear-gradient(135deg, #9D50BB 0%, #6E48AA 100%);
+  --roamie-glass: rgba(255, 255, 255, 0.05);
+  --roamie-shadow: 0 10px 40px 0 rgba(0, 0, 0, 0.4);
+  --roamie-radius: 24px;
+}
+
+body {
+  --ion-background-color: var(--roamie-bg);
+  --ion-text-color: #ffffff;
+}
+
+ion-content {
+  --background: var(--roamie-bg);
+  --color: #ffffff;
+}
+
+ion-card, .roamie-card {
+  --background: var(--roamie-surface);
+  --color: #ffffff;
+  background: var(--roamie-surface);
+  color: #ffffff;
+}
+
+ion-item {
+  --background: var(--roamie-surface);
+  --color: #ffffff;
+}

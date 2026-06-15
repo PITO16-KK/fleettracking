@@ -1,0 +1,141 @@
+ion-header {
+  padding-top: env(safe-area-inset-top);
+}
+
+ion-toolbar {
+  --background: var(--roamie-bg);
+  color: #ffffff;
+}
+
+ion-title {
+  color: #ffffff;
+}
+
+ion-button {
+  color: #ffffff;
+}
+
+.avatar-section {
+  text-align: center;
+  margin: 20px 0 40px;
+
+  .avatar-wrapper {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 16px;
+
+    img {
+      width: 100%;
+      height: 100%;
+      border-radius: 40px;
+      object-fit: cover;
+      border: 3px solid rgba(255,255,255,0.1);
+    }
+
+    .change-btn {
+      position: absolute;
+      bottom: -5px;
+      right: -5px;
+      background: var(--ion-color-primary);
+      color: white;
+      width: 36px;
+      height: 36px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid var(--roamie-bg);
+      font-size: 18px;
+    }
+  }
+
+  p {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--ion-color-primary);
+  }
+}
+
+.form-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.input-group {
+  label {
+    display: block;
+    margin-bottom: 8px;
+    margin-left: 4px;
+    font-size: 13px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.7);
+  }
+
+  ion-item {
+    margin: 0;
+    --padding-start: 12px;
+    transition: border-color 0.3s ease;
+    --background: rgba(255,255,255,0.06);
+    --border-radius: 16px;
+    border: 1px solid rgba(255,255,255,0.12);
+
+    &.invalid {
+      border-color: var(--ion-color-danger) !important;
+      box-shadow: 0 4px 12px rgba(235, 68, 90, 0.15) !important;
+    }
+    
+    ion-icon {
+      font-size: 20px;
+      color: rgba(255,255,255,0.75);
+      opacity: 0.95;
+    }
+
+    ion-label {
+      color: rgba(255,255,255,0.7);
+      font-weight: 600;
+    }
+
+    ion-input, ion-textarea {
+      font-weight: 600;
+      --placeholder-color: rgba(255,255,255,0.4);
+      color: #ffffff;
+    }
+  }
+
+  .error-msg {
+    margin-top: 6px;
+    margin-left: 12px;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--ion-color-danger);
+    animation: fadeInUp 0.3s ease;
+  }
+}
+
+.footer-actions {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.save-btn {
+  margin: 0;
+  height: 56px;
+  --border-radius: 16px;
+  font-weight: 800;
+  font-size: 16px;
+  --box-shadow: 0 10px 20px rgba(157, 80, 187, 0.2);
+
+  &[disabled] {
+    opacity: 0.5;
+  }
+}
+
+.cancel-btn {
+  margin: 0;
+  font-weight: 700;
+  --color: rgba(255,255,255,0.6);
+}

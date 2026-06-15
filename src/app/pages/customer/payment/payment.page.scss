@@ -1,0 +1,730 @@
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 60vh;
+  color: rgba(255, 255, 255, 0.6);
+  
+  ion-spinner {
+    --color: var(--ion-color-primary);
+    width: 40px;
+    height: 40px;
+    margin-bottom: 15px;
+  }
+}
+
+.summary-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .car-info {
+    h3 {
+      margin: 0 0 4px;
+      font-size: 18px;
+      font-weight: 800;
+      color: #fff;
+    }
+    p {
+      margin: 0;
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.5);
+      font-weight: 600;
+    }
+  }
+
+  .price-info {
+    text-align: right;
+    
+    label {
+      display: block;
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.4);
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+    
+    .price {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--ion-color-primary);
+    }
+  }
+}
+
+.bank-details-card {
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(168, 85, 247, 0.05) 100%);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 20px;
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+    
+    ion-icon {
+      font-size: 22px;
+      color: var(--ion-color-primary);
+    }
+    
+    h4 {
+      margin: 0;
+      font-size: 15px;
+      font-weight: 800;
+      color: #fff;
+    }
+  }
+
+  .bank-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    font-size: 14px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+
+    &:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .label {
+      color: rgba(255, 255, 255, 0.5);
+      font-weight: 600;
+    }
+
+    .val {
+      color: #fff;
+      text-align: right;
+    }
+
+    .font-bold {
+      font-weight: 800;
+    }
+
+    .text-accent {
+      color: var(--ion-color-primary);
+      font-size: 16px;
+    }
+  }
+}
+
+.instructions-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 16px;
+  padding: 16px 20px;
+  margin-bottom: 25px;
+
+  h5 {
+    margin: 0 0 10px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  ol {
+    margin: 0;
+    padding-left: 20px;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 13px;
+    font-weight: 500;
+    
+    li {
+      margin-bottom: 8px;
+      line-height: 1.5;
+      
+      &:last-child {
+        margin-bottom: 0;
+      }
+      
+      strong {
+        color: #fff;
+      }
+    }
+  }
+}
+
+.upload-form {
+  h4 {
+    margin: 0 0 15px 5px;
+    font-size: 15px;
+    font-weight: 800;
+    color: #fff;
+  }
+
+  .input-item {
+    --background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    margin-bottom: 15px;
+    --padding-start: 16px;
+    --padding-end: 16px;
+    
+    ion-label {
+      color: rgba(255, 255, 255, 0.4) !important;
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: 0.5px;
+      margin-bottom: 5px;
+    }
+
+    ion-input {
+      --color: #fff;
+      font-weight: 600;
+      font-size: 14px;
+    }
+  }
+
+  .file-upload-area {
+    background: rgba(255, 255, 255, 0.01);
+    border: 2px dashed rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+    margin-bottom: 25px;
+    cursor: pointer;
+    overflow: hidden;
+    position: relative;
+    transition: all 0.3s ease;
+
+    &:hover {
+      border-color: var(--ion-color-primary);
+      background: rgba(99, 102, 241, 0.02);
+    }
+
+    .upload-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 20px;
+      
+      ion-icon {
+        font-size: 36px;
+        color: rgba(255, 255, 255, 0.4);
+        margin-bottom: 8px;
+      }
+      
+      span {
+        font-size: 14px;
+        font-weight: 700;
+        color: #fff;
+        margin-bottom: 4px;
+      }
+      
+      p {
+        margin: 0;
+        font-size: 11px;
+        color: rgba(255, 255, 255, 0.4);
+        font-weight: 500;
+      }
+    }
+
+    .preview-container {
+      width: 100%;
+      height: 100%;
+      
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        background: #000;
+      }
+
+      .change-overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: rgba(0, 0, 0, 0.75);
+        padding: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        color: #fff;
+        font-size: 12px;
+        font-weight: 700;
+        backdrop-filter: blur(4px);
+        
+        ion-icon {
+          font-size: 16px;
+        }
+      }
+    }
+  }
+
+  .submit-btn {
+    height: 52px;
+    --border-radius: 14px;
+    font-weight: 800;
+    font-size: 15px;
+    margin-top: 10px;
+    --background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+  }
+}
+
+.status-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 30px 10px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 20px;
+  margin-top: 10px;
+
+  .status-icon-box {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    
+    ion-icon {
+      font-size: 44px;
+    }
+
+    &.orange {
+      background: rgba(245, 158, 11, 0.1);
+      color: var(--ion-color-warning);
+      box-shadow: 0 0 20px rgba(245, 158, 11, 0.2);
+    }
+
+    &.green {
+      background: rgba(45, 211, 111, 0.1);
+      color: var(--ion-color-success);
+      box-shadow: 0 0 20px rgba(45, 211, 111, 0.2);
+    }
+
+    &.red {
+      background: rgba(235, 68, 90, 0.1);
+      color: var(--ion-color-danger);
+      box-shadow: 0 0 20px rgba(235, 68, 90, 0.2);
+    }
+  }
+
+  h2 {
+    margin: 0 0 10px;
+    font-size: 20px;
+    font-weight: 800;
+    color: #fff;
+  }
+
+  .desc {
+    margin: 0 0 25px;
+    font-size: 14px;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.6);
+    padding: 0 10px;
+  }
+
+  .uploaded-details, .success-details {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    border-radius: 14px;
+    padding: 16px;
+    margin-bottom: 30px;
+    text-align: left;
+
+    h5 {
+      margin: 0 0 12px;
+      font-size: 13px;
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.4);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .row {
+      display: flex;
+      justify-content: space-between;
+      padding: 6px 0;
+      font-size: 14px;
+      color: #fff;
+
+      span {
+        color: rgba(255, 255, 255, 0.5);
+      }
+
+      strong {
+        font-weight: 700;
+      }
+      
+      a {
+        color: var(--ion-color-primary);
+        text-decoration: none;
+        font-weight: 700;
+      }
+    }
+
+    .img-row {
+      align-items: center;
+    }
+
+    .badge {
+      font-size: 11px;
+      font-weight: 800;
+      padding: 4px 8px;
+      border-radius: 4px;
+      letter-spacing: 0.5px;
+      
+      &.lunas {
+        background: rgba(45, 211, 111, 0.15);
+        color: var(--ion-color-success);
+      }
+    }
+  }
+
+  .action-buttons {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    ion-button {
+      height: 48px;
+      --border-radius: 12px;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .btn-refresh {
+      --box-shadow: 0 4px 10px rgba(245, 158, 11, 0.2);
+    }
+    
+    .btn-back {
+      --color: rgba(255, 255, 255, 0.6);
+      font-weight: 600;
+    }
+  }
+}
+
+.margin-top-lg {
+  margin-top: 20px;
+}
+
+// Payment Methods Selection Grid
+.section-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: rgba(255, 255, 255, 0.4);
+  margin-bottom: 12px;
+  margin-top: 5px;
+}
+
+.methods-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.method-btn {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1.5px solid rgba(255, 255, 255, 0.05);
+  border-radius: 14px;
+  padding: 14px 8px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  text-align: center;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    border-color: rgba(99, 102, 241, 0.3);
+    background: rgba(99, 102, 241, 0.03);
+  }
+
+  &.active {
+    border-color: var(--ion-color-primary);
+    background: rgba(99, 102, 241, 0.08);
+
+    &::after {
+      content: '✓';
+      position: absolute;
+      top: 6px;
+      right: 8px;
+      font-size: 10px;
+      color: var(--ion-color-primary);
+      font-weight: 800;
+    }
+  }
+
+  .method-logo {
+    font-size: 14px;
+    font-weight: 800;
+    display: block;
+    margin-bottom: 3px;
+  }
+
+  .method-label {
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.4);
+    font-weight: 500;
+  }
+}
+
+.qris-btn {
+  grid-column: span 2;
+}
+
+// Colors for branding
+.dana-color {
+  color: #118EEA;
+}
+
+.bca-color {
+  color: #2980b9;
+}
+
+.mandiri-color {
+  color: #f39c12;
+}
+
+.bni-color {
+  color: #d35400;
+}
+
+.qris-color {
+  background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+// Transfer Panels
+.transfer-panel {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1.5px solid rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 20px;
+  animation: fadeIn 0.3s ease-in-out;
+
+  .bank-name-header {
+    font-size: 16px;
+    font-weight: 800;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .badge-instant {
+      font-size: 10px;
+      padding: 3px 8px;
+      background: rgba(17, 142, 234, 0.1);
+      border: 1px solid rgba(17, 142, 234, 0.2);
+      border-radius: 20px;
+      color: #118EEA;
+      font-weight: 700;
+    }
+  }
+
+  .account-box {
+    background: rgba(99, 102, 241, 0.05);
+    border: 1px solid rgba(99, 102, 241, 0.15);
+    border-radius: 12px;
+    padding: 12px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+
+    .acc-details {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+
+      .label {
+        font-size: 11px;
+        color: rgba(255, 255, 255, 0.4);
+        font-weight: 600;
+      }
+
+      .number {
+        font-size: 18px;
+        font-weight: 800;
+        letter-spacing: 1px;
+        color: #fff;
+      }
+    }
+
+    ion-button {
+      --color: var(--ion-color-primary);
+      margin: 0;
+      --padding-start: 8px;
+      --padding-end: 8px;
+      height: 36px;
+    }
+  }
+
+  .account-name-label {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.5);
+    margin-bottom: 18px;
+
+    strong {
+      color: #fff;
+    }
+  }
+
+  .steps-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+
+    .step-item {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.6);
+      line-height: 1.4;
+
+      .step-num {
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: rgba(99, 102, 241, 0.1);
+        border: 1px solid rgba(99, 102, 241, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 10px;
+        font-weight: 700;
+        color: var(--ion-color-primary);
+        flex-shrink: 0;
+        margin-top: 1px;
+      }
+    }
+  }
+}
+
+// QR Code and QRIS Specifics
+.qr-box-container {
+  text-align: center;
+  margin: 15px 0 20px;
+  background: rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
+  padding: 16px;
+
+  .qr-svg-wrapper {
+    width: 150px;
+    height: 150px;
+    background: #fff;
+    border-radius: 12px;
+    margin: 0 auto;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+
+    &.border-dana {
+      border: 2px solid #118EEA;
+    }
+    
+    &.border-qris {
+      border: 2px solid #fff;
+    }
+
+    svg {
+      display: block;
+    }
+  }
+
+  .qr-caption {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.4);
+    margin-top: 8px;
+    margin-bottom: 0;
+    font-weight: 500;
+  }
+}
+
+.qris-payment-box {
+  text-align: center;
+  padding: 16px;
+  background: rgba(0, 0, 0, 0.15);
+  border: 1.5px solid rgba(255, 255, 255, 0.03);
+  border-radius: 16px;
+  margin-bottom: 15px;
+
+  .qris-merchant-title {
+    font-weight: 800;
+    font-size: 15px;
+    margin-bottom: 2px;
+    letter-spacing: 0.5px;
+    color: #fff;
+  }
+
+  .qris-merchant-nmid {
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.4);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 15px;
+  }
+
+  .qris-amount-display {
+    font-size: 20px;
+    font-weight: 800;
+    background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-top: 10px;
+  }
+}
+
+.select-method-note {
+  text-align: center;
+  padding: 30px 20px;
+  background: rgba(255, 255, 255, 0.01);
+  border: 1px dashed rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 13px;
+  line-height: 1.6;
+  margin-top: 15px;
+  
+  p {
+    margin: 0;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

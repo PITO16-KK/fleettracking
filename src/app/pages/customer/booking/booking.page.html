@@ -1,0 +1,122 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text="" color="dark"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Checkout</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div *ngIf="car" class="animate-up checkout-wrapper">
+    <!-- Mini Preview -->
+    <div class="mini-car-card">
+      <img [src]="car.image" alt="">
+      <div class="text">
+        <h4>{{ car.brand }} {{ car.model }}</h4>
+        <p>Premium {{ car.type }}</p>
+      </div>
+    </div>
+
+    <!-- Premium Schedule Card -->
+    <div class="schedule-card roamie-card">
+      <div class="schedule-item" (click)="openPicker('date-picker')">
+        <div class="icon-box">
+          <ion-icon name="calendar"></ion-icon>
+        </div>
+        <div class="details">
+          <label>Pick-up Date</label>
+          <span>{{ pickupDate | date:'dd MMM yyyy' }}</span>
+        </div>
+        <ion-datetime-button datetime="date-picker"></ion-datetime-button>
+      </div>
+
+      <div class="schedule-divider"></div>
+
+      <div class="schedule-item" (click)="openPicker('time-picker')">
+        <div class="icon-box">
+          <ion-icon name="time"></ion-icon>
+        </div>
+        <div class="details">
+          <label>Pick-up Time</label>
+          <span>{{ pickupTime | date:'HH:mm' }}</span>
+        </div>
+        <ion-datetime-button datetime="time-picker"></ion-datetime-button>
+      </div>
+
+      <div class="schedule-divider"></div>
+
+      <div class="schedule-item no-click">
+        <div class="icon-box">
+          <ion-icon name="hourglass"></ion-icon>
+        </div>
+        <div class="details">
+          <label>Rental Duration</label>
+          <div class="duration-controls">
+            <button (click)="updateDuration(-1)">-</button>
+            <span class="dur-val">{{ duration }} Days</span>
+            <button (click)="updateDuration(1)">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modals -->
+    <ion-modal [keepContentsMounted]="true">
+      <ng-template>
+        <ion-datetime id="date-picker" presentation="date" [(ngModel)]="pickupDate"></ion-datetime>
+      </ng-template>
+    </ion-modal>
+
+    <ion-modal [keepContentsMounted]="true">
+      <ng-template>
+        <ion-datetime id="time-picker" presentation="time" [(ngModel)]="pickupTime"></ion-datetime>
+      </ng-template>
+    </ion-modal>
+
+    <!-- Billing -->
+    <div class="billing-section">
+      <h3>Billing Summary</h3>
+      <div class="bill-card">
+        <div class="bill-row">
+          <span>Day Rate (x{{ duration }})</span>
+          <span>Rp {{ subtotal | number }}</span>
+        </div>
+        <div class="bill-row">
+          <span>Service & Protection</span>
+          <span>Rp {{ serviceFee | number }}</span>
+        </div>
+        <div class="divider"></div>
+        <div class="bill-row grand-total">
+          <span>Total Amount</span>
+          <span class="price">Rp {{ total | number }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="payment-method">
+      <h3>Metode Pembayaran</h3>
+
+      <!-- Transfer Bank Manual Card -->
+      <div class="method-card active">
+        <ion-icon name="cash-outline" class="midtrans-icon" style="color: #6366f1;"></ion-icon>
+        <div class="info">
+          <span>Transfer Bank Manual</span>
+          <p>BCA, Mandiri, BNI, BRI (Verifikasi Admin)</p>
+        </div>
+      </div>
+    </div>
+
+    <ion-button 
+      expand="block" 
+      class="confirm-btn" 
+      (click)="confirmBooking()" 
+      [disabled]="isProcessing">
+      <span *ngIf="!isProcessing">Lanjutkan Pembayaran</span>
+      <ion-spinner *ngIf="isProcessing" name="crescent"></ion-spinner>
+    </ion-button>
+
+  </div><!-- end checkout-wrapper -->
+
+</ion-content>
+

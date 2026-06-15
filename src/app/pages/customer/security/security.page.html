@@ -1,0 +1,164 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Pengaturan Keamanan</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="security-wrapper animate-up">
+    <!-- Header Title -->
+    <div class="page-header">
+      <h2>Pusat Keamanan</h2>
+      <p>Kelola password, otentikasi, dan sesi aktif perangkat Anda.</p>
+    </div>
+
+    <!-- Password Section -->
+    <div class="glass-panel security-card">
+      <div class="card-header">
+        <ion-icon name="key-outline" class="header-icon"></ion-icon>
+        <h3>Ubah Password</h3>
+      </div>
+      
+      <form [formGroup]="passwordForm" (ngSubmit)="handleSavePassword()">
+        <!-- Current Password -->
+        <ion-item lines="none" class="roamie-input">
+          <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
+          <ion-input 
+            label="Password Saat Ini" 
+            label-placement="floating" 
+            [type]="showCurrentPassword ? 'text' : 'password'" 
+            formControlName="currentPassword">
+          </ion-input>
+          <ion-icon 
+            [name]="showCurrentPassword ? 'eye-off-outline' : 'eye-outline'" 
+            slot="end"
+            (click)="showCurrentPassword = !showCurrentPassword" 
+            style="cursor: pointer;">
+          </ion-icon>
+        </ion-item>
+
+        <!-- New Password -->
+        <ion-item lines="none" class="roamie-input mt-12">
+          <ion-icon name="shield-checkmark-outline" slot="start"></ion-icon>
+          <ion-input 
+            label="Password Baru" 
+            label-placement="floating" 
+            [type]="showNewPassword ? 'text' : 'password'" 
+            formControlName="newPassword">
+          </ion-input>
+          <ion-icon 
+            [name]="showNewPassword ? 'eye-off-outline' : 'eye-outline'" 
+            slot="end"
+            (click)="showNewPassword = !showNewPassword" 
+            style="cursor: pointer;">
+          </ion-icon>
+        </ion-item>
+
+        <!-- Confirm Password -->
+        <ion-item lines="none" class="roamie-input mt-12">
+          <ion-icon name="shield-checkmark-outline" slot="start"></ion-icon>
+          <ion-input 
+            label="Konfirmasi Password Baru" 
+            label-placement="floating" 
+            [type]="showConfirmPassword ? 'text' : 'password'" 
+            formControlName="confirmPassword">
+          </ion-input>
+          <ion-icon 
+            [name]="showConfirmPassword ? 'eye-off-outline' : 'eye-outline'" 
+            slot="end"
+            (click)="showConfirmPassword = !showConfirmPassword" 
+            style="cursor: pointer;">
+          </ion-icon>
+        </ion-item>
+
+        <ion-button expand="block" type="submit" class="action-btn mt-20" [disabled]="isLoading">
+          <span *ngIf="!isLoading">Simpan Password</span>
+          <ion-spinner *ngIf="isLoading" name="crescent"></ion-spinner>
+        </ion-button>
+      </form>
+    </div>
+
+    <!-- Toggles Section -->
+    <div class="glass-panel security-card mt-20">
+      <div class="card-header">
+        <ion-icon name="shield-half-outline" class="header-icon"></ion-icon>
+        <h3>Preferensi Otentikasi</h3>
+      </div>
+
+      <div class="toggle-row">
+        <div class="toggle-info">
+          <h4>Ingat Saya (Auto Login)</h4>
+          <p>Tetap masuk ke aplikasi tanpa harus mengetik ulang kredensial.</p>
+        </div>
+        <ion-toggle 
+          color="primary" 
+          [checked]="rememberMeEnabled" 
+          (ionChange)="togglePreference('remember_me', $event)">
+        </ion-toggle>
+      </div>
+
+      <div class="toggle-divider"></div>
+
+      <div class="toggle-row">
+        <div class="toggle-info">
+          <h4>Sidik Jari / Face ID</h4>
+          <p>Otorisasi masuk aplikasi secara cepat menggunakan sensor biometrik.</p>
+        </div>
+        <ion-toggle 
+          color="primary" 
+          [checked]="biometricEnabled" 
+          (ionChange)="togglePreference('biometric', $event)">
+        </ion-toggle>
+      </div>
+
+      <div class="toggle-divider"></div>
+
+      <div class="toggle-row">
+        <div class="toggle-info">
+          <h4>Otentikasi Dua Faktor (2FA)</h4>
+          <p>Tingkatkan keamanan akun dengan verifikasi kode OTP tambahan.</p>
+        </div>
+        <ion-toggle 
+          color="primary" 
+          [checked]="twoFactorEnabled" 
+          (ionChange)="togglePreference('2fa', $event)">
+        </ion-toggle>
+      </div>
+    </div>
+
+    <!-- Sessions Section -->
+    <div class="glass-panel security-card mt-20">
+      <div class="card-header">
+        <ion-icon name="phone-portrait-outline" class="header-icon"></ion-icon>
+        <h3>Perangkat Terhubung</h3>
+      </div>
+      <p class="section-desc">Berikut adalah daftar perangkat yang sedang masuk menggunakan akun Anda saat ini.</p>
+
+      <div class="session-list">
+        <div class="session-item" *ngFor="let s of sessions">
+          <div class="session-icon">
+            <ion-icon [name]="s.icon"></ion-icon>
+          </div>
+          <div class="session-details">
+            <div class="device-name-row">
+              <h4>{{ s.device }}</h4>
+              <span class="active-badge" *ngIf="s.active">Aktif Sekarang</span>
+            </div>
+            <p>{{ s.location }}</p>
+          </div>
+          <button 
+            class="revoke-btn" 
+            *ngIf="!s.active" 
+            (click)="revokeSession(s.id, s.device)">
+            Keluarkan
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

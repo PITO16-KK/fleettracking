@@ -1,0 +1,130 @@
+<ion-content [fullscreen]="true">
+  <!-- STAGE 1: ANIMATED SPLASHSCREEN -->
+  <div class="splash-stage" *ngIf="currentStage === 'splash'">
+    <div class="splash-logo-container">
+      <div class="glow-ring"></div>
+      <div class="logo-wrapper">
+        <span class="logo-text">ROAMIE</span>
+        <span class="logo-dot">.</span>
+      </div>
+      <div class="spinner-modern"></div>
+    </div>
+  </div>
+
+  <!-- STAGE 2: ONBOARDING & AGREEMENT -->
+  <div class="onboarding-stage" *ngIf="currentStage === 'onboarding'">
+    <!-- Header Logo -->
+    <div class="onboarding-header">
+      <span class="brand-logo">ROAMIE<span class="brand-dot">.</span></span>
+      <span class="badge-privasi" *ngIf="currentSlide === 2">PRIVASI</span>
+    </div>
+
+    <!-- SLIDE 1: INTRODUCING ROAMIE -->
+    <div class="slide-content animate-fade" *ngIf="currentSlide === 1">
+      <div class="illustration-box">
+        <div class="shield-circle">
+          <div class="shield-icon-bg">
+            <ion-icon name="checkmark-sharp" class="shield-check"></ion-icon>
+          </div>
+          <div class="stars-row">
+            <ion-icon name="star"></ion-icon>
+            <ion-icon name="star"></ion-icon>
+            <ion-icon name="star"></ion-icon>
+            <ion-icon name="star"></ion-icon>
+            <ion-icon name="star"></ion-icon>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-content">
+        <h2>Layanan Terbaik & Nyaman</h2>
+        <p>
+          Perjalanan aman dengan armada modern pilihan yang terawat berkala, serta dikemudikan oleh pengemudi profesional bersertifikat.
+        </p>
+      </div>
+
+      <!-- Slide Indicator Dots -->
+      <div class="indicator-row">
+        <span class="pill-dot active"></span>
+        <span class="pill-dot"></span>
+      </div>
+
+      <!-- Footer Actions -->
+      <div class="footer-actions single-btn">
+        <button class="btn-yellow-full" (click)="nextSlide()">
+          Mulai Sekarang <ion-icon name="checkmark-sharp" class="icon-right"></ion-icon>
+        </button>
+      </div>
+    </div>
+
+    <!-- SLIDE 2: PRIVACY & RULES AGREEMENT -->
+    <div class="slide-content agreement-slide animate-fade" *ngIf="currentSlide === 2">
+      <div class="intro-card">
+        <h3>Selamat datang di Roamie Rentcar</h3>
+        <p>
+          Sebelum kita mulai perjalanan Anda, mohon luangkan waktu sejenak untuk membaca dan menyetujui Kebijakan Privasi dan Ketentuan Penggunaan aplikasi kami.
+        </p>
+      </div>
+
+      <!-- Scrollable Agreement Text -->
+      <div class="agreement-box" (scroll)="onScrollAgreement($event)">
+        <div class="agreement-section">
+          <h4><ion-icon name="shield-checkmark-outline"></ion-icon> 1. Pengumpulan Informasi</h4>
+          <p>
+            Kami mengumpulkan informasi pribadi yang Anda berikan secara langsung seperti nama, alamat email, nomor telepon, foto KTP, serta foto SIM A untuk kebutuhan pemesanan dan verifikasi sewa mobil yang aman.
+          </p>
+        </div>
+
+        <div class="agreement-section">
+          <h4><ion-icon name="location-outline"></ion-icon> 2. Data Lokasi (GPS)</h4>
+          <p>
+            Untuk mengaktifkan fitur pelacakan armada real-time dan verifikasi lokasi sewa aktif, kami memerlukan akses ke lokasi GPS latar belakang perangkat Anda. Ini membantu melacak keberadaan unit demi keamanan bersama.
+          </p>
+        </div>
+
+        <div class="agreement-section">
+          <h4><ion-icon name="lock-closed-outline"></ion-icon> 3. Penggunaan & Keamanan Data</h4>
+          <p>
+            Semua data pribadi dan transaksi keuangan Anda dilindungi dengan enkripsi tingkat tinggi. Kami berkomitmen untuk tidak pernah menjual, menyewakan, atau menyebarkan data pribadi Anda ke pihak ketiga lainnya.
+          </p>
+        </div>
+
+        <div class="agreement-section">
+          <h4><ion-icon name="document-text-outline"></ion-icon> 4. Ketentuan Pembayaran</h4>
+          <p>
+            Pengguna wajib menyelesaikan pembayaran manual via transfer bank yang tersedia dan mengunggah bukti pembayaran yang valid. Transaksi akan diproses setelah verifikasi manual oleh administrator.
+          </p>
+        </div>
+      </div>
+
+      <!-- Read Indicator Banner -->
+      <div class="read-banner" [class.read]="hasReadToBottom">
+        <ion-icon [name]="hasReadToBottom ? 'checkmark-circle-outline' : 'arrow-down-outline'"></ion-icon>
+        <span>
+          {{ hasReadToBottom ? 'Anda telah membaca dokumen ini' : 'Harap baca dokumen hingga selesai sebelum menyetujui' }}
+        </span>
+      </div>
+
+      <!-- Checkbox Agreement -->
+      <div class="checkbox-row" [class.disabled]="!hasReadToBottom">
+        <ion-checkbox [(ngModel)]="hasAgreed" [disabled]="!hasReadToBottom"></ion-checkbox>
+        <span (click)="hasReadToBottom && (hasAgreed = !hasAgreed)">
+          Saya menyetujui Kebijakan Privasi & Ketentuan Layanan
+        </span>
+      </div>
+
+      <!-- Footer Actions (Back + Agree Button) -->
+      <div class="footer-actions split-btn">
+        <button class="btn-back-circle" (click)="prevSlide()">
+          <ion-icon name="arrow-back-outline"></ion-icon>
+        </button>
+        <button 
+          class="btn-agree-full" 
+          [disabled]="!hasAgreed" 
+          (click)="finishOnboarding()">
+          Setuju & Lanjutkan <ion-icon name="arrow-forward-outline" class="icon-right"></ion-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+</ion-content>

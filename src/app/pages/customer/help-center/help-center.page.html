@@ -1,0 +1,197 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Pusat Bantuan</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div *ngIf="!isChatMode" class="help-wrapper animate-up">
+    <!-- Header Title -->
+    <div class="page-header">
+      <h2>Ada yang bisa dibantu?</h2>
+      <p>Temukan jawaban instan untuk pertanyaan Anda atau hubungi layanan pelanggan kami.</p>
+    </div>
+
+    <!-- AI Chatbot Banner -->
+    <div class="chatbot-banner mt-16 glass-panel" (click)="enterChatMode()">
+      <div class="banner-content">
+        <div class="banner-icon">
+          <ion-icon name="chatbubble-ellipses-outline"></ion-icon>
+        </div>
+        <div class="banner-text">
+          <h4>Tanya Asisten AI Roamie</h4>
+          <p>Dapatkan jawaban instan 24/7 mengenai sewa & pembayaran.</p>
+        </div>
+      </div>
+      <ion-icon name="chevron-forward-outline" class="banner-arrow"></ion-icon>
+    </div>
+
+    <!-- Search Bar -->
+    <div class="search-container mt-16">
+      <ion-searchbar 
+        placeholder="Cari FAQ..." 
+        [debounce]="200" 
+        (ionInput)="handleSearch($event)"
+        class="custom-searchbar">
+      </ion-searchbar>
+    </div>
+
+    <!-- Category Filters -->
+    <div class="category-scroll mt-12">
+      <div 
+        class="cat-chip" 
+        [class.active]="activeCategory === 'all'" 
+        (click)="selectCategory('all')">
+        Semua
+      </div>
+      <div 
+        class="cat-chip" 
+        [class.active]="activeCategory === 'rent'" 
+        (click)="selectCategory('rent')">
+        Sewa
+      </div>
+      <div 
+        class="cat-chip" 
+        [class.active]="activeCategory === 'payment'" 
+        (click)="selectCategory('payment')">
+        Pembayaran
+      </div>
+      <div 
+        class="cat-chip" 
+        [class.active]="activeCategory === 'terms'" 
+        (click)="selectCategory('terms')">
+        Ketentuan
+      </div>
+      <div 
+        class="cat-chip" 
+        [class.active]="activeCategory === 'trouble'" 
+        (click)="selectCategory('trouble')">
+        Kendala
+      </div>
+    </div>
+
+    <!-- FAQs Section -->
+    <div class="faq-section mt-20">
+      <div class="section-title">
+        <h3>Pertanyaan Populer</h3>
+      </div>
+
+      <div class="faq-list">
+        <div 
+          class="faq-card glass-panel" 
+          *ngFor="let faq of filteredFaqs" 
+          [class.open]="faq.open"
+          (click)="toggleFaq(faq)">
+          
+          <div class="faq-header">
+            <h4>{{ faq.question }}</h4>
+            <ion-icon 
+              [name]="faq.open ? 'chevron-up-outline' : 'chevron-down-outline'"
+              class="toggle-icon">
+            </ion-icon>
+          </div>
+          
+          <div class="faq-content">
+            <p>{{ faq.answer }}</p>
+          </div>
+        </div>
+
+        <div *ngIf="filteredFaqs.length === 0" class="empty-faq">
+          <ion-icon name="search-outline"></ion-icon>
+          <p>FAQ yang Anda cari tidak ditemukan.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contact CS Section -->
+    <div class="contact-section mt-30">
+      <div class="section-title">
+        <h3>Masih butuh bantuan?</h3>
+        <p>Hubungi layanan CS Roamie 24/7 di bawah ini.</p>
+      </div>
+
+      <div class="contact-grid">
+        <!-- WhatsApp Card -->
+        <div class="contact-card glass-panel whatsapp" (click)="contactChannel('whatsapp')">
+          <div class="contact-icon">
+            <ion-icon name="logo-whatsapp"></ion-icon>
+          </div>
+          <h4>WhatsApp</h4>
+          <p>Chat Customer Service</p>
+        </div>
+
+        <!-- Phone Card -->
+        <div class="contact-card glass-panel phone" (click)="contactChannel('phone')">
+          <div class="contact-icon">
+            <ion-icon name="call-outline"></ion-icon>
+          </div>
+          <h4>Call Center</h4>
+          <p>Telepon 1500-ROAM</p>
+        </div>
+
+        <!-- Email Card -->
+        <div class="contact-card glass-panel email" (click)="contactChannel('email')">
+          <div class="contact-icon">
+            <ion-icon name="mail-outline"></ion-icon>
+          </div>
+          <h4>Email Support</h4>
+          <p>Kirim email kendala</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chatbot Interface -->
+  <div *ngIf="isChatMode" class="chat-wrapper animate-up">
+    <!-- Chat Header -->
+    <div class="chat-header">
+      <div class="header-info">
+        <span class="avatar">🤖</span>
+        <div>
+          <h4>Asisten AI Roamie</h4>
+          <div class="status">
+            <span class="dot"></span>
+            <span>Online • AI CS 24/7</span>
+          </div>
+        </div>
+      </div>
+      <ion-button fill="clear" size="small" class="btn-exit" (click)="exitChatMode()">
+        <ion-icon slot="start" name="close-circle-outline"></ion-icon>
+        Keluar Chat
+      </ion-button>
+    </div>
+
+    <!-- Chat Messages -->
+    <div class="chat-messages" id="chatMessagesContainer">
+      <div *ngFor="let msg of chatMessages" class="chat-bubble" [class.ai]="msg.role === 'model'" [class.user]="msg.role === 'user'">
+        {{ msg.content }}
+      </div>
+      
+      <!-- Typing Indicator -->
+      <div *ngIf="isSending" class="chat-typing">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+
+    <!-- Chat Input Area -->
+    <div class="chat-input-area">
+      <ion-input 
+        class="input-box" 
+        [(ngModel)]="chatInput" 
+        placeholder="Tulis pertanyaan Anda..."
+        (keyup.enter)="sendMessage()"
+        autocomplete="off">
+      </ion-input>
+      <button class="btn-send" (click)="sendMessage()" [disabled]="!chatInput.trim() || isSending">
+        <ion-icon name="send-outline"></ion-icon>
+      </button>
+    </div>
+  </div>
+</ion-content>

@@ -1,0 +1,385 @@
+ion-header {
+  padding-top: env(safe-area-inset-top);
+}
+
+ion-toolbar {
+  --background: var(--roamie-bg);
+  color: #ffffff;
+  padding: 0 16px;
+}
+
+ion-segment {
+  background: var(--roamie-surface);
+  border-radius: 12px;
+  padding: 4px;
+  box-shadow: var(--roamie-shadow);
+  margin-bottom: 16px;
+}
+
+.rental-list {
+  padding: 8px;
+}
+
+.rental-card {
+  margin: 12px;
+  padding: 16px;
+
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+
+    .status-badge {
+      padding: 4px 10px;
+      border-radius: 8px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      
+      &.active { background: rgba(45, 211, 111, 0.1); color: var(--ion-color-success); }
+      &.completed { background: rgba(91, 108, 255, 0.1); color: var(--ion-color-primary); }
+      &.cancelled { background: rgba(235, 68, 90, 0.1); color: var(--ion-color-danger); }
+      
+      &.payment-status-badge {
+        &.paid { background: rgba(45, 211, 111, 0.1); color: var(--ion-color-success); }
+        &.pending { background: rgba(245, 158, 11, 0.1); color: var(--ion-color-warning); }
+        &.rejected { background: rgba(235, 68, 90, 0.1); color: var(--ion-color-danger); }
+        &.unpaid { background: rgba(255, 255, 255, 0.05); color: rgba(255, 255, 255, 0.5); }
+      }
+    }
+
+    .id {
+      font-size: 12px;
+      color: rgba(255,255,255,0.6);
+      font-weight: 600;
+    }
+  }
+
+  .card-content {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 16px;
+
+    img {
+      width: 100px;
+      height: 70px;
+      object-fit: cover;
+      border-radius: 12px;
+    }
+
+    .info {
+      h3 {
+        margin: 0;
+        font-size: 18px;
+        font-weight: 700;
+      }
+
+      .plate {
+        font-size: 12px;
+        color: rgba(255,255,255,0.7);
+        margin: 4px 0 8px;
+        font-weight: 600;
+      }
+
+      .details {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+
+        .detail-item {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          font-size: 12px;
+          color: #ffffff;
+          font-weight: 600;
+          
+          ion-icon {
+            font-size: 14px;
+            color: var(--ion-color-primary);
+          }
+        }
+      }
+    }
+  }
+
+  .card-footer {
+    border-top: 1px solid var(--roamie-bg);
+    padding-top: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .price {
+      .label {
+        font-size: 10px;
+        color: var(--ion-color-medium);
+        display: block;
+      }
+      .amount {
+        font-weight: 800;
+        color: var(--ion-color-primary);
+      }
+    }
+  }
+}
+
+.empty-state {
+  text-align: center;
+  padding: 100px 40px;
+  color: var(--ion-color-medium);
+
+  ion-icon {
+    font-size: 64px;
+    margin-bottom: 16px;
+  }
+
+  h3 {
+    color: var(--ion-color-dark);
+    font-weight: 700;
+  }
+
+  p {
+    margin-bottom: 30px;
+  }
+}
+
+.footer-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  .rate-btn {
+    --box-shadow: 0 4px 12px rgba(255, 196, 9, 0.2);
+    --border-radius: 8px;
+    font-weight: 700;
+    font-size: 11px;
+    height: 32px;
+    text-transform: uppercase;
+  }
+}
+
+/* ==================== RATING MODAL STYLING ==================== */
+.rating-backdrop {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(8px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.rating-modal {
+  width: 100%;
+  max-width: 350px;
+  background: var(--roamie-surface);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 28px;
+  padding: 24px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  .rating-header {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+
+    .logo-circle {
+      width: 56px;
+      height: 56px;
+      background: rgba(255, 196, 9, 0.1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      margin-bottom: 8px;
+    }
+
+    h3 {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    p {
+      margin: 0;
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.6);
+      line-height: 1.5;
+      strong {
+        color: #ffffff;
+      }
+    }
+  }
+
+  .rating-body {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    .stars-container {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+
+      ion-icon {
+        font-size: 36px;
+        color: rgba(255, 255, 255, 0.15);
+        cursor: pointer;
+        transition: all 0.2s ease;
+
+        &.active {
+          color: #ffc409;
+          transform: scale(1.15);
+          filter: drop-shadow(0 0 8px rgba(255, 196, 9, 0.4));
+        }
+
+        &:active {
+          transform: scale(0.9);
+        }
+      }
+    }
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+
+      label {
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: rgba(255, 255, 255, 0.4);
+      }
+
+      textarea {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 16px;
+        padding: 12px 14px;
+        color: #ffffff;
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 1.4;
+        outline: none;
+        resize: none;
+        transition: all 0.3s ease;
+
+        &::placeholder {
+          color: rgba(255, 255, 255, 0.3);
+        }
+
+        &:focus {
+          border-color: var(--ion-color-primary);
+          background: rgba(255, 255, 255, 0.08);
+          box-shadow: 0 0 0 3px rgba(91, 108, 255, 0.15);
+        }
+      }
+    }
+  }
+
+  .rating-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    button {
+      padding: 14px;
+      font-size: 14px;
+      font-weight: 700;
+      border-radius: 16px;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+
+      &.btn-primary {
+        background: var(--ion-color-primary);
+        color: #ffffff;
+        box-shadow: 0 8px 20px rgba(91, 108, 255, 0.2);
+
+        &:active {
+          transform: scale(0.97);
+        }
+      }
+
+      &.btn-text {
+        background: transparent;
+        color: rgba(255, 255, 255, 0.5);
+
+        &:active {
+          color: #ffffff;
+        }
+      }
+    }
+  }
+}
+
+/* ==================== GPS TRACKING SECTION ==================== */
+.gps-section {
+  margin: 12px 0;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px dashed rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  .gps-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .gps-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #ffffff;
+
+      ion-icon {
+        font-size: 16px;
+        color: var(--ion-color-success);
+      }
+    }
+
+    ion-toggle {
+      --background: rgba(255, 255, 255, 0.1);
+      --handle-background: #ffffff;
+      --background-checked: var(--ion-color-success);
+      margin: 0;
+      padding: 0;
+      height: 24px;
+      width: 44px;
+    }
+  }
+
+  .gps-status {
+    font-size: 11px;
+    color: var(--ion-color-success);
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    animation: gpsPulse 2s infinite ease-in-out;
+  }
+}
+
+@keyframes gpsPulse {
+  0% { opacity: 0.6; }
+  50% { opacity: 1; }
+  100% { opacity: 0.6; }
+}

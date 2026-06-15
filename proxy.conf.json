@@ -1,0 +1,8 @@
+{
+  "/api": {
+    "target": "https://roamie.zytraxo.com",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  }
+}

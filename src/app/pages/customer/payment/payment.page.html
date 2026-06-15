@@ -1,0 +1,548 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/customer/rentals" text=""></ion-back-button>
+    </ion-buttons>
+    <ion-title>Pembayaran Sewa</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div *ngIf="isLoading" class="loading-container">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Memuat detail pembayaran...</p>
+  </div>
+
+  <div *ngIf="!isLoading">
+    <!-- Rental Summary Card -->
+    <div class="summary-card">
+      <div class="car-info">
+        <h3>{{ rental?.car }}</h3>
+        <p>{{ rental?.duration }} Hari Sewa</p>
+      </div>
+      <div class="price-info">
+        <label>Total Tagihan</label>
+        <span class="price">Rp {{ totalPrice | number }}</span>
+      </div>
+    </div>
+
+    <!-- STATUS 1: UNPAID -->
+    <div *ngIf="paymentStatus === 'unpaid'" class="payment-section">
+      <!-- Choose Payment Method (Website Parity) -->
+      <div class="section-label">Pilih Metode Pembayaran</div>
+      <div class="methods-grid">
+        <div class="method-btn" [class.active]="selectedMethod === 'dana'" (click)="selectMethod('dana')">
+          <span class="method-logo dana-color">DANA</span>
+          <span class="method-label">e-Wallet</span>
+        </div>
+        <div class="method-btn" [class.active]="selectedMethod === 'bca'" (click)="selectMethod('bca')">
+          <span class="method-logo bca-color">BCA</span>
+          <span class="method-label">Transfer Bank</span>
+        </div>
+        <div class="method-btn" [class.active]="selectedMethod === 'mandiri'" (click)="selectMethod('mandiri')">
+          <span class="method-logo mandiri-color">Mandiri</span>
+          <span class="method-label">Transfer Bank</span>
+        </div>
+        <div class="method-btn" [class.active]="selectedMethod === 'bni'" (click)="selectMethod('bni')">
+          <span class="method-logo bni-color">BNI</span>
+          <span class="method-label">Transfer Bank</span>
+        </div>
+        <div class="method-btn qris-btn" [class.active]="selectedMethod === 'qris'" (click)="selectMethod('qris')">
+          <span class="method-logo qris-color">⬛ QRIS</span>
+          <span class="method-label">Scan QR Code</span>
+        </div>
+      </div>
+
+      <!-- DANA Panel -->
+      <div *ngIf="selectedMethod === 'dana'" class="transfer-panel dana">
+        <div class="bank-name-header dana-color">
+          <span>💙 DANA e-Wallet</span>
+          <span class="badge-instant">Konfirmasi Instan</span>
+        </div>
+        
+        <div class="qr-box-container">
+          <div class="qr-svg-wrapper border-dana">
+            <!-- DANA SVG from website -->
+            <svg width="130" height="130" viewBox="0 0 29 29" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M0 0h7v7H0V0zm1 1v5h5V1H1zm1 1h3v3H2V2z" fill="#118EEA"/>
+              <path d="M22 0h7v7h-7V0zm1 1v5h5V1h-5zm1 1h3v3h-3V2z" fill="#118EEA"/>
+              <path d="M0 22h7v7H0v-7zm1 1v5h5v-5H1zm1 1h3v3H2v-3z" fill="#118EEA"/>
+              <path d="M9 1h1v1H9V1zm2 0h1v1h-1V1zm3 0h3v1h-3V1zm4 0h1v1h-1V1zm2 0h1v1h-1V1z" fill="#000"/>
+              <path d="M9 2h2v1H9V2zm3 0h1v2h-1V2zm2 0h1v1h-1V2zm3 0h1v1h-1V2zm2 0h2v1h-2V2z" fill="#000"/>
+              <path d="M10 4h2v1h-2V4zm3 0h3v1h-3V4zm5 0h1v1h-1V4z" fill="#000"/>
+              <path d="M9 5h1v2H9V5zm2 0h2v1h-2V5zm4 0h2v1h-2V5zm3 0h1v1h-1V5z" fill="#000"/>
+              <path d="M1 9h1v1H1V9zm3 0h2v1H4V9zm3 0h1v2H7V9zm2 0h3v1H9V9zm4 0h1v1h-1V9zm2 0h2v1h-2V9zm4 0h1v2h-1V9zm2 0h2v1h-2V9z" fill="#000"/>
+              <rect x="11" y="11" width="7" height="7" rx="1.5" fill="#fff" stroke="#118EEA" stroke-width="1"/>
+              <text x="14.5" y="15.5" font-family="sans-serif" font-size="3" font-weight="900" text-anchor="middle" fill="#118EEA">DANA</text>
+            </svg>
+          </div>
+          <p class="qr-caption">Scan QR di atas dengan aplikasi DANA Anda</p>
+        </div>
+
+        <div class="account-box">
+          <div class="acc-details">
+            <span class="label">Nomor HP DANA Penerima</span>
+            <span class="number">0812-3456-7890</span>
+          </div>
+          <ion-button fill="clear" (click)="copyText('081234567890')">
+            <ion-icon slot="icon-only" name="copy-outline"></ion-icon>
+          </ion-button>
+        </div>
+        <div class="account-name-label">a.n. <strong>PT ROAMIE SMART RENT</strong></div>
+
+        <div class="steps-list">
+          <div class="step-item"><span class="step-num">1</span><span>Scan QR atau kirim langsung ke nomor DANA penerima di atas</span></div>
+          <div class="step-item"><span class="step-num">2</span><span>Masukkan nominal transfer sesuai total tagihan sewa</span></div>
+          <div class="step-item"><span class="step-num">3</span><span>Unggah bukti transfer dan isi rincian rekening Anda di form bawah</span></div>
+        </div>
+      </div>
+
+      <!-- BCA Panel -->
+      <div *ngIf="selectedMethod === 'bca'" class="transfer-panel bca">
+        <div class="bank-name-header bca-color">
+          <span>🏦 Bank BCA</span>
+        </div>
+        <div class="account-box">
+          <div class="acc-details">
+            <span class="label">Nomor Rekening</span>
+            <span class="number">8720-1928-31</span>
+          </div>
+          <ion-button fill="clear" (click)="copyText('8720192831')">
+            <ion-icon slot="icon-only" name="copy-outline"></ion-icon>
+          </ion-button>
+        </div>
+        <div class="account-name-label">a.n. <strong>PT ROAMIE SMART RENT</strong></div>
+        <div class="steps-list">
+          <div class="step-item"><span class="step-num">1</span><span>Buka m-BCA / ATM BCA</span></div>
+          <div class="step-item"><span class="step-num">2</span><span>Pilih <strong>Transfer → ke Rekening BCA</strong></span></div>
+          <div class="step-item"><span class="step-num">3</span><span>Transfer sesuai nominal Total di ringkasan pesanan</span></div>
+          <div class="step-item"><span class="step-num">4</span><span>Unggah bukti bayar & isi data rekening Anda di bawah</span></div>
+        </div>
+      </div>
+
+      <!-- Mandiri Panel -->
+      <div *ngIf="selectedMethod === 'mandiri'" class="transfer-panel mandiri">
+        <div class="bank-name-header mandiri-color">
+          <span>🏦 Bank Mandiri</span>
+        </div>
+        <div class="account-box">
+          <div class="acc-details">
+            <span class="label">Nomor Rekening</span>
+            <span class="number">1370-0281-9283</span>
+          </div>
+          <ion-button fill="clear" (click)="copyText('137002819283')">
+            <ion-icon slot="icon-only" name="copy-outline"></ion-icon>
+          </ion-button>
+        </div>
+        <div class="account-name-label">a.n. <strong>PT ROAMIE SMART RENT</strong></div>
+        <div class="steps-list">
+          <div class="step-item"><span class="step-num">1</span><span>Buka Livin by Mandiri / ATM Mandiri</span></div>
+          <div class="step-item"><span class="step-num">2</span><span>Pilih <strong>Transfer → Mandiri</strong></span></div>
+          <div class="step-item"><span class="step-num">3</span><span>Kirim uang pas sesuai nominal Tagihan</span></div>
+          <div class="step-item"><span class="step-num">4</span><span>Isi rincian pengirim & upload struk transaksi di bawah</span></div>
+        </div>
+      </div>
+
+      <!-- BNI Panel -->
+      <div *ngIf="selectedMethod === 'bni'" class="transfer-panel bni">
+        <div class="bank-name-header bni-color">
+          <span>🏦 Bank BNI</span>
+        </div>
+        <div class="account-box">
+          <div class="acc-details">
+            <span class="label">Nomor Rekening</span>
+            <span class="number">0981-2938-12</span>
+          </div>
+          <ion-button fill="clear" (click)="copyText('0981293812')">
+            <ion-icon slot="icon-only" name="copy-outline"></ion-icon>
+          </ion-button>
+        </div>
+        <div class="account-name-label">a.n. <strong>PT ROAMIE SMART RENT</strong></div>
+        <div class="steps-list">
+          <div class="step-item"><span class="step-num">1</span><span>Buka BNI Mobile / ATM BNI</span></div>
+          <div class="step-item"><span class="step-num">2</span><span>Pilih <strong>Transfer → BNI</strong></span></div>
+          <div class="step-item"><span class="step-num">3</span><span>Transfer nominal tagihan secara tepat</span></div>
+          <div class="step-item"><span class="step-num">4</span><span>Isi detail pengirim & upload bukti bayar di bawah</span></div>
+        </div>
+      </div>
+
+      <!-- QRIS Panel -->
+      <div *ngIf="selectedMethod === 'qris'" class="transfer-panel qris">
+        <div class="bank-name-header qris-color">
+          <span>⬛ Scan QRIS Resmi</span>
+          <span class="badge-instant">QRIS GPN</span>
+        </div>
+        
+        <div class="qris-payment-box">
+          <div class="qris-merchant-title">PT ROAMIE SMART RENT</div>
+          <div class="qris-merchant-nmid">NMID: ID1020304050607</div>
+          <div class="qr-svg-wrapper border-qris">
+            <!-- QRIS SVG from website -->
+            <svg width="140" height="140" viewBox="0 0 29 29" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M0 0h7v7H0V0zm1 1v5h5V1H1zm1 1h3v3H2V2z" fill="#000"/>
+              <path d="M22 0h7v7h-7V0zm1 1v5h5V1h-5zm1 1h3v3h-3V2z" fill="#000"/>
+              <path d="M0 22h7v7H0v-7zm1 1v5h5v-5H1zm1 1h3v3H2v-3z" fill="#000"/>
+              <path d="M9 1h1v1H9V1zm2 0h1v1h-1V1zm3 0h3v1h-3V1zm4 0h1v1h-1V1zm2 0h1v1h-1V1z" fill="#000"/>
+              <path d="M9 2h2v1H9V2zm3 0h1v2h-1V2zm2 0h1v1h-1V2zm3 0h1v1h-1V2zm2 0h2v1h-2V2z" fill="#000"/>
+              <path d="M10 4h2v1h-2V4zm3 0h3v1h-3V4zm5 0h1v1h-1V4z" fill="#000"/>
+              <path d="M9 5h1v2H9V5zm2 0h2v1h-2V5zm4 0h2v1h-2V5zm3 0h1v1h-1V5z" fill="#000"/>
+              <path d="M1 9h1v1H1V9zm3 0h2v1H4V9zm3 0h1v2H7V9zm2 0h3v1H9V9zm4 0h1v1h-1V9zm2 0h2v1h-2V9zm4 0h1v2h-1V9zm2 0h2v1h-2V9z" fill="#000"/>
+              <path d="M0 10h2v1H0v-1zm3 0h1v1H3v-1zm5 0h1v1H8v-1zm3 0h2v1h-2v-1zm4 0h2v1h-2v-1zm3 0h2v1h-2v-1zm4 0h2v1h-2v-1z" fill="#000"/>
+              <path d="M1 12h2v1H1v-1zm4 0h1v1H5v-1zm3 0h1v1H8v-1zm2 0h1v1h-1v-1zm3 0h3v1h-3v-1zm7 0h3v1h-3v-1z" fill="#000"/>
+              <path d="M0 13h1v1H0v-1zm2 0h2v1H2v-1zm5 0h1v1H7v-1zm2 0h2v1H9v-1zm3 0h1v1h-1v-1zm4 0h2v1h-2v-1zm4 0h1v1h-1v-1zm3 0h2v1h-2v-1z" fill="#000"/>
+              <path d="M1 15h1v1H1v-1zm4 0h2v1H5v-1zm3 0h1v1H8v-1zm2 0h3v1h-3v-1zm6 0h2v1h-2v-1zm3 0h1v1h-1v-1zm3 0h2v1h-2v-1z" fill="#000"/>
+              <path d="M0 16h2v1H0v-1zm3 0h1v1H3v-1zm5 0h1v1H8v-1zm3 0h2v1h-2v-1zm4 0h2v1h-2v-1zm3 0h2v1h-2v-1zm4 0h2v1h-2v-1z" fill="#000"/>
+              <path d="M9 18h2v1H9v-1zm3 0h1v2h-1v-2zm2 0h1v1h-1v-1zm3 0h1v1h-1v-1zm2 0h2v1h-2v-1z" fill="#000"/>
+              <rect x="11" y="11" width="7" height="7" rx="1.2" fill="#fff" stroke="#000" stroke-width="0.8"/>
+              <path d="M12.5 12.5h4v4h-4z" fill="#E51C24"/>
+              <circle cx="14.5" cy="14.5" r="1.2" fill="#fff"/>
+            </svg>
+          </div>
+          <div class="qris-amount-display">Rp {{ totalPrice | number }}</div>
+        </div>
+
+        <div class="steps-list">
+          <div class="step-item"><span class="step-num">1</span><span>Scan QR Code di atas menggunakan aplikasi finansial Anda</span></div>
+          <div class="step-item"><span class="step-num">2</span><span>Pastikan nominal pembayaran sama persis</span></div>
+          <div class="step-item"><span class="step-num">3</span><span>Unggah bukti pembayaran sukses & isi data diri di bawah</span></div>
+        </div>
+      </div>
+
+      <!-- Unified Sender Form & File Upload Area (only if selectedMethod is set) -->
+      <div *ngIf="selectedMethod" class="upload-form margin-top-lg">
+        <h4>Detail Rekening & Bukti Transfer Anda</h4>
+        
+        <ion-item lines="none" class="input-item">
+          <ion-label position="stacked">Nama Bank Pengirim (BCA, Mandiri, DANA, dll)</ion-label>
+          <ion-input [(ngModel)]="bankName" placeholder="Contoh: Bank BCA"></ion-input>
+        </ion-item>
+
+        <ion-item lines="none" class="input-item">
+          <ion-label position="stacked">Nomor Rekening / No. HP Pengirim</ion-label>
+          <ion-input [(ngModel)]="accountNumber" placeholder="Contoh: 12345678"></ion-input>
+        </ion-item>
+
+        <ion-item lines="none" class="input-item">
+          <ion-label position="stacked">Nama Pemilik Rekening / Akun</ion-label>
+          <ion-input [(ngModel)]="accountName" placeholder="Contoh: John Doe"></ion-input>
+        </ion-item>
+
+        <!-- Native Proof Upload Area -->
+        <div class="file-upload-area" (click)="selectImage()">
+          <div *ngIf="!filePreview" class="upload-placeholder">
+            <ion-icon name="cloud-upload-outline"></ion-icon>
+            <span>Pilih Gambar Bukti Transfer</span>
+            <p>Ambil Foto atau Pilih Galeri (Maks 2MB)</p>
+          </div>
+
+          <div *ngIf="filePreview" class="preview-container">
+            <img [src]="filePreview" alt="Bukti Transfer Preview">
+            <div class="change-overlay">
+              <ion-icon name="camera-outline"></ion-icon>
+              <span>Ubah Gambar</span>
+            </div>
+          </div>
+        </div>
+
+        <ion-button expand="block" class="submit-btn" (click)="submitProof()" [disabled]="isUploading">
+          <span *ngIf="!isUploading">Kirim Bukti Pembayaran</span>
+          <ion-spinner *ngIf="isUploading" name="crescent"></ion-spinner>
+        </ion-button>
+      </div>
+
+      <div *ngIf="!selectedMethod" class="select-method-note">
+        <p>Silakan pilih metode pembayaran terlebih dahulu untuk melihat instruksi transfer & mengunggah bukti bayar.</p>
+      </div>
+    </div>
+
+    <!-- STATUS 2: PENDING (WAITING VERIFICATION) -->
+    <div *ngIf="paymentStatus === 'pending'" class="status-section pending">
+      <div class="status-icon-box orange">
+        <ion-icon name="time"></ion-icon>
+      </div>
+      <h2>Menunggu Verifikasi Admin</h2>
+      <p class="desc">
+        Bukti pembayaran Anda telah kami terima dan sedang diproses verifikasi oleh Admin. Silakan periksa kembali secara berkala dengan menekan tombol **Refresh** di bawah ini.
+      </p>
+
+      <div class="uploaded-details">
+        <h5>Detail Pengirim:</h5>
+        <div class="row">
+          <span>Pengirim:</span>
+          <strong>{{ paymentDetails?.account_name }} ({{ paymentDetails?.bank_name }})</strong>
+        </div>
+        <div class="row">
+          <span>Jumlah:</span>
+          <strong>Rp {{ totalPrice | number }}</strong>
+        </div>
+        <div class="row img-row" *ngIf="paymentDetails?.proof_of_payment">
+          <span>Bukti Pembayaran:</span>
+          <a [href]="paymentDetails.proof_of_payment" target="_blank">Lihat Bukti Transfer</a>
+        </div>
+      </div>
+
+      <div class="action-buttons">
+        <ion-button expand="block" color="warning" (click)="refreshStatus()" class="btn-refresh">
+          <ion-icon slot="start" name="refresh"></ion-icon>
+          Refresh Status
+        </ion-button>
+        <ion-button expand="block" fill="outline" color="warning" (click)="goToChatbot()">
+          <ion-icon slot="start" name="chatbubble-ellipses-outline"></ion-icon>
+          Tanya Jawab / Bantuan AI
+        </ion-button>
+        <ion-button expand="block" fill="clear" (click)="goToRentals()" class="btn-back">
+          Lihat Daftar Sewa
+        </ion-button>
+      </div>
+    </div>
+
+    <!-- STATUS 3: PAID (APPROVED) -->
+    <div *ngIf="paymentStatus === 'paid'" class="status-section success">
+      <div class="status-icon-box green">
+        <ion-icon name="checkmark-circle"></ion-icon>
+      </div>
+      <h2>Pembayaran Lunas!</h2>
+      <p class="desc">
+        Terima kasih, pembayaran Anda telah berhasil diverifikasi oleh admin. Mobil Anda kini siap digunakan sesuai jadwal sewa Anda.
+      </p>
+
+      <div class="success-details">
+        <div class="row">
+          <span>Status Pembayaran:</span>
+          <span class="badge lunas">LUNAS</span>
+        </div>
+        <div class="row">
+          <span>Total Bayar:</span>
+          <strong>Rp {{ totalPrice | number }}</strong>
+        </div>
+        <div class="row">
+          <span>Metode Pembayaran:</span>
+          <strong>Transfer Bank Manual</strong>
+        </div>
+      </div>
+
+      <div class="action-buttons">
+        <ion-button expand="block" color="success" (click)="goToRentals()">
+          Masuk ke Daftar Sewa
+        </ion-button>
+        <ion-button expand="block" fill="outline" color="success" (click)="goToChatbot()">
+          <ion-icon slot="start" name="chatbubble-ellipses-outline"></ion-icon>
+          Tanya Jawab / Bantuan AI
+        </ion-button>
+      </div>
+    </div>
+
+    <!-- STATUS 4: REJECTED -->
+    <div *ngIf="paymentStatus === 'rejected'" class="status-section danger">
+      <div class="status-icon-box red">
+        <ion-icon name="close-circle"></ion-icon>
+      </div>
+      <h2>Pembayaran Ditolak</h2>
+      <p class="desc">
+        Bukti transfer yang Anda kirimkan ditolak oleh Admin. Silakan periksa kembali dan kirim ulang bukti transfer yang valid.
+      </p>
+
+      <!-- Re-upload Form (Website parity grid, panels, and uploader) -->
+      <div class="payment-section" style="width: 100%; text-align: left; background: transparent; border: none; padding: 0; margin: 0;">
+        <div class="section-label">Pilih Metode Pembayaran</div>
+        <div class="methods-grid">
+          <div class="method-btn" [class.active]="selectedMethod === 'dana'" (click)="selectMethod('dana')">
+            <span class="method-logo dana-color">DANA</span>
+            <span class="method-label">e-Wallet</span>
+          </div>
+          <div class="method-btn" [class.active]="selectedMethod === 'bca'" (click)="selectMethod('bca')">
+            <span class="method-logo bca-color">BCA</span>
+            <span class="method-label">Transfer Bank</span>
+          </div>
+          <div class="method-btn" [class.active]="selectedMethod === 'mandiri'" (click)="selectMethod('mandiri')">
+            <span class="method-logo mandiri-color">Mandiri</span>
+            <span class="method-label">Transfer Bank</span>
+          </div>
+          <div class="method-btn" [class.active]="selectedMethod === 'bni'" (click)="selectMethod('bni')">
+            <span class="method-logo bni-color">BNI</span>
+            <span class="method-label">Transfer Bank</span>
+          </div>
+          <div class="method-btn qris-btn" [class.active]="selectedMethod === 'qris'" (click)="selectMethod('qris')">
+            <span class="method-logo qris-color">⬛ QRIS</span>
+            <span class="method-label">Scan QR Code</span>
+          </div>
+        </div>
+
+        <!-- DANA Panel -->
+        <div *ngIf="selectedMethod === 'dana'" class="transfer-panel dana">
+          <div class="bank-name-header dana-color">
+            <span>💙 DANA e-Wallet</span>
+            <span class="badge-instant">Konfirmasi Instan</span>
+          </div>
+          
+          <div class="qr-box-container">
+            <div class="qr-svg-wrapper border-dana">
+              <svg width="130" height="130" viewBox="0 0 29 29" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0 0h7v7H0V0zm1 1v5h5V1H1zm1 1h3v3H2V2z" fill="#118EEA"/>
+                <path d="M22 0h7v7h-7V0zm1 1v5h5V1h-5zm1 1h3v3h-3V2z" fill="#118EEA"/>
+                <path d="M0 22h7v7H0v-7zm1 1v5h5v-5H1zm1 1h3v3H2v-3z" fill="#118EEA"/>
+                <path d="M9 1h1v1H9V1zm2 0h1v1h-1V1zm3 0h3v1h-3V1zm4 0h1v1h-1V1zm2 0h1v1h-1V1z" fill="#000"/>
+                <path d="M9 2h2v1H9V2zm3 0h1v2h-1V2zm2 0h1v1h-1V2zm3 0h1v1h-1V2zm2 0h2v1h-2V2z" fill="#000"/>
+                <path d="M10 4h2v1h-2V4zm3 0h3v1h-3V4zm5 0h1v1h-1V4z" fill="#000"/>
+                <path d="M9 5h1v2H9V5zm2 0h2v1h-2V5zm4 0h2v1h-2V5zm3 0h1v1h-1V5z" fill="#000"/>
+                <path d="M1 9h1v1H1V9zm3 0h2v1H4V9zm3 0h1v2H7V9zm2 0h3v1H9V9zm4 0h1v1h-1V9zm2 0h2v1h-2V9zm4 0h1v2h-1V9zm2 0h2v1h-2V9z" fill="#000"/>
+                <rect x="11" y="11" width="7" height="7" rx="1.5" fill="#fff" stroke="#118EEA" stroke-width="1"/>
+                <text x="14.5" y="15.5" font-family="sans-serif" font-size="3" font-weight="900" text-anchor="middle" fill="#118EEA">DANA</text>
+              </svg>
+            </div>
+            <p class="qr-caption">Scan QR di atas dengan aplikasi DANA Anda</p>
+          </div>
+
+          <div class="account-box">
+            <div class="acc-details">
+              <span class="label">Nomor HP DANA Penerima</span>
+              <span class="number">0812-3456-7890</span>
+            </div>
+            <ion-button fill="clear" (click)="copyText('081234567890')">
+              <ion-icon slot="icon-only" name="copy-outline"></ion-icon>
+            </ion-button>
+          </div>
+          <div class="account-name-label">a.n. <strong>PT ROAMIE SMART RENT</strong></div>
+        </div>
+
+        <!-- BCA Panel -->
+        <div *ngIf="selectedMethod === 'bca'" class="transfer-panel bca">
+          <div class="bank-name-header bca-color">
+            <span>🏦 Bank BCA</span>
+          </div>
+          <div class="account-box">
+            <div class="acc-details">
+              <span class="label">Nomor Rekening</span>
+              <span class="number">8720-1928-31</span>
+            </div>
+            <ion-button fill="clear" (click)="copyText('8720192831')">
+              <ion-icon slot="icon-only" name="copy-outline"></ion-icon>
+            </ion-button>
+          </div>
+          <div class="account-name-label">a.n. <strong>PT ROAMIE SMART RENT</strong></div>
+        </div>
+
+        <!-- Mandiri Panel -->
+        <div *ngIf="selectedMethod === 'mandiri'" class="transfer-panel mandiri">
+          <div class="bank-name-header mandiri-color">
+            <span>🏦 Bank Mandiri</span>
+          </div>
+          <div class="account-box">
+            <div class="acc-details">
+              <span class="label">Nomor Rekening</span>
+              <span class="number">1370-0281-9283</span>
+            </div>
+            <ion-button fill="clear" (click)="copyText('137002819283')">
+              <ion-icon slot="icon-only" name="copy-outline"></ion-icon>
+            </ion-button>
+          </div>
+          <div class="account-name-label">a.n. <strong>PT ROAMIE SMART RENT</strong></div>
+        </div>
+
+        <!-- BNI Panel -->
+        <div *ngIf="selectedMethod === 'bni'" class="transfer-panel bni">
+          <div class="bank-name-header bni-color">
+            <span>🏦 Bank BNI</span>
+          </div>
+          <div class="account-box">
+            <div class="acc-details">
+              <span class="label">Nomor Rekening</span>
+              <span class="number">0981-2938-12</span>
+            </div>
+            <ion-button fill="clear" (click)="copyText('0981293812')">
+              <ion-icon slot="icon-only" name="copy-outline"></ion-icon>
+            </ion-button>
+          </div>
+          <div class="account-name-label">a.n. <strong>PT ROAMIE SMART RENT</strong></div>
+        </div>
+
+        <!-- QRIS Panel -->
+        <div *ngIf="selectedMethod === 'qris'" class="transfer-panel qris">
+          <div class="bank-name-header qris-color">
+            <span>⬛ Scan QRIS Resmi</span>
+            <span class="badge-instant">QRIS GPN</span>
+          </div>
+          
+          <div class="qris-payment-box">
+            <div class="qris-merchant-title">PT ROAMIE SMART RENT</div>
+            <div class="qris-merchant-nmid">NMID: ID1020304050607</div>
+            <div class="qr-svg-wrapper border-qris">
+              <svg width="140" height="140" viewBox="0 0 29 29" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0 0h7v7H0V0zm1 1v5h5V1H1zm1 1h3v3H2V2z" fill="#000"/>
+                <path d="M22 0h7v7h-7V0zm1 1v5h5V1h-5zm1 1h3v3h-3V2z" fill="#000"/>
+                <path d="M0 22h7v7H0v-7zm1 1v5h5v-5H1zm1 1h3v3H2v-3z" fill="#000"/>
+                <path d="M9 1h1v1H9V1zm2 0h1v1h-1V1zm3 0h3v1h-3V1zm4 0h1v1h-1V1zm2 0h1v1h-1V1z" fill="#000"/>
+                <path d="M9 2h2v1H9V2zm3 0h1v2h-1V2zm2 0h1v1h-1V2zm3 0h1v1h-1V2zm2 0h2v1h-2V2z" fill="#000"/>
+                <path d="M10 4h2v1h-2V4zm3 0h3v1h-3V4zm5 0h1v1h-1V4z" fill="#000"/>
+                <path d="M9 5h1v2H9V5zm2 0h2v1h-2V5zm4 0h2v1h-2V5zm3 0h1v1h-1V5z" fill="#000"/>
+                <path d="M1 9h1v1H1V9zm3 0h2v1H4V9zm3 0h1v2H7V9zm2 0h3v1H9V9zm4 0h1v1h-1V9zm2 0h2v1h-2V9zm4 0h1v2h-1V9zm2 0h2v1h-2V9z" fill="#000"/>
+                <path d="M0 10h2v1H0v-1zm3 0h1v1H3v-1zm5 0h1v1H8v-1zm3 0h2v1h-2v-1zm4 0h2v1h-2v-1zm3 0h2v1h-2v-1zm4 0h2v1h-2v-1z" fill="#000"/>
+                <path d="M1 12h2v1H1v-1zm4 0h1v1H5v-1zm3 0h1v1H8v-1zm2 0h1v1h-1v-1zm3 0h3v1h-3v-1zm7 0h3v1h-3v-1z" fill="#000"/>
+                <path d="M0 13h1v1H0v-1zm2 0h2v1H2v-1zm5 0h1v1H7v-1zm2 0h2v1H9v-1zm3 0h1v1h-1v-1zm4 0h2v1h-2v-1zm4 0h1v1h-1v-1zm3 0h2v1h-2v-1z" fill="#000"/>
+                <path d="M1 15h1v1H1v-1zm4 0h2v1H5v-1zm3 0h1v1H8v-1zm2 0h3v1h-3v-1zm6 0h2v1h-2v-1zm3 0h1v1h-1v-1zm3 0h2v1h-2v-1z" fill="#000"/>
+                <path d="M0 16h2v1H0v-1zm3 0h1v1H3v-1zm5 0h1v1H8v-1zm3 0h2v1h-2v-1zm4 0h2v1h-2v-1zm3 0h2v1h-2v-1zm4 0h2v1h-2v-1z" fill="#000"/>
+                <path d="M9 18h2v1H9v-1zm3 0h1v2h-1v-2zm2 0h1v1h-1v-1zm3 0h1v1h-1v-1zm2 0h2v1h-2v-1z" fill="#000"/>
+                <rect x="11" y="11" width="7" height="7" rx="1.2" fill="#fff" stroke="#000" stroke-width="0.8"/>
+                <path d="M12.5 12.5h4v4h-4z" fill="#E51C24"/>
+                <circle cx="14.5" cy="14.5" r="1.2" fill="#fff"/>
+              </svg>
+            </div>
+            <div class="qris-amount-display">Rp {{ totalPrice | number }}</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Unified Sender Form & File Upload Area (only if selectedMethod is set) -->
+      <div *ngIf="selectedMethod" class="upload-form margin-top-lg">
+        <h4>Detail Rekening & Bukti Transfer Baru</h4>
+        
+        <ion-item lines="none" class="input-item">
+          <ion-label position="stacked">Nama Bank Pengirim (BCA, Mandiri, DANA, dll)</ion-label>
+          <ion-input [(ngModel)]="bankName" placeholder="Contoh: Bank BCA"></ion-input>
+        </ion-item>
+
+        <ion-item lines="none" class="input-item">
+          <ion-label position="stacked">Nomor Rekening / No. HP Pengirim</ion-label>
+          <ion-input [(ngModel)]="accountNumber" placeholder="Contoh: 12345678"></ion-input>
+        </ion-item>
+
+        <ion-item lines="none" class="input-item">
+          <ion-label position="stacked">Nama Pemilik Rekening / Akun</ion-label>
+          <ion-input [(ngModel)]="accountName" placeholder="Contoh: John Doe"></ion-input>
+        </ion-item>
+
+        <div class="file-upload-area" (click)="selectImage()">
+          <div *ngIf="!filePreview" class="upload-placeholder">
+            <ion-icon name="cloud-upload-outline"></ion-icon>
+            <span>Pilih Gambar Bukti Transfer Baru</span>
+            <p>Ambil Foto atau Pilih Galeri (Maks 2MB)</p>
+          </div>
+
+          <div *ngIf="filePreview" class="preview-container">
+            <img [src]="filePreview" alt="Bukti Transfer Preview">
+            <div class="change-overlay">
+              <ion-icon name="camera-outline"></ion-icon>
+              <span>Ubah Gambar</span>
+            </div>
+          </div>
+        </div>
+
+        <ion-button expand="block" color="danger" class="submit-btn" (click)="submitProof()" [disabled]="isUploading">
+          <span *ngIf="!isUploading">Kirim Ulang Bukti Pembayaran</span>
+          <ion-spinner *ngIf="isUploading" name="crescent"></ion-spinner>
+        </ion-button>
+      </div>
+
+      <div *ngIf="!selectedMethod" class="select-method-note">
+        <p>Silakan pilih metode pembayaran terlebih dahulu untuk melihat instruksi transfer & mengunggah bukti bayar.</p>
+      </div>
+    </div>
+
+    <div class="action-buttons" style="margin-top: 20px;">
+      <ion-button expand="block" fill="clear" (click)="goToRentals()" class="btn-back">
+        Batal & Kembali ke Daftar Sewa
+      </ion-button>
+    </div>
+
+  </div>
+</ion-content>

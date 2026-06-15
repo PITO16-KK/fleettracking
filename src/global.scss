@@ -1,0 +1,220 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+/* Core CSS imports */
+@import "@ionic/angular/css/core.css";
+@import "@ionic/angular/css/normalize.css";
+@import "@ionic/angular/css/structure.css";
+@import "@ionic/angular/css/typography.css";
+@import "@ionic/angular/css/display.css";
+@import "@ionic/angular/css/padding.css";
+@import "@ionic/angular/css/float-elements.css";
+@import "@ionic/angular/css/text-alignment.css";
+@import "@ionic/angular/css/text-transformation.css";
+@import "@ionic/angular/css/flex-utils.css";
+
+/* Roamie Global Styles */
+* {
+  font-family: 'Outfit', sans-serif;
+}
+
+:root {
+  --ion-font-family: 'Outfit', sans-serif;
+}
+
+ion-content {
+  --background: var(--roamie-bg);
+  --color: #ffffff;
+  color: #ffffff;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+span,
+ion-label,
+div {
+  color: #ffffff;
+}
+
+.ion-color-medium {
+  --ion-color-base: rgba(255, 255, 255, 0.7) !important;
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.roamie-card {
+  background: var(--roamie-surface);
+  border-radius: var(--roamie-radius);
+  box-shadow: var(--roamie-shadow);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  margin: 16px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  color: white;
+
+  &.clickable:active {
+    transform: scale(0.98);
+  }
+}
+
+.glass-panel {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--roamie-radius);
+  color: white;
+}
+
+.gradient-text {
+  background: var(--roamie-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  font-weight: 700;
+}
+
+.gradient-bg {
+  background: radial-gradient(at 0% 0%, hsla(271, 76%, 53%, 1) 0, transparent 50%),
+    radial-gradient(at 50% 0%, hsla(245, 61%, 11%, 1) 0, transparent 50%),
+    radial-gradient(at 100% 0%, hsla(11, 100%, 66%, 1) 0, transparent 50%),
+    #0F0C29;
+  color: white;
+}
+
+/* Rounded Buttons */
+ion-button {
+  --border-radius: 12px;
+  --box-shadow: none;
+  font-weight: 600;
+  text-transform: none;
+  height: 48px;
+
+  &.button-round {
+    --border-radius: 24px;
+  }
+}
+
+/* Custom Tabs (Mobile) */
+ion-tab-bar {
+  --background: var(--roamie-surface);
+  --border: none;
+  height: 70px;
+  padding-bottom: env(safe-area-inset-bottom);
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
+  box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.05);
+  margin-top: -30px;
+  position: relative;
+  z-index: 10;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-up {
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+/* Floating labels for forms */
+ion-item {
+  --border-radius: 12px;
+  --background: var(--roamie-surface);
+  --color: #ffffff;
+  margin-bottom: 12px;
+  --padding-start: 16px;
+  --inner-padding-end: 16px;
+  --border-color: transparent;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+  ion-label,
+  ion-icon {
+    color: #ffffff !important;
+  }
+
+  &.item-has-focus {
+    --border-color: var(--ion-color-primary);
+    box-shadow: 0 4px 12px rgba(91, 108, 255, 0.1);
+  }
+}
+
+/* ActionSheet Dark Theme Fix */
+ion-action-sheet {
+  --background: var(--roamie-surface);
+  --color: #ffffff;
+  --button-color: #ffffff;
+  --button-color-selected: var(--ion-color-primary);
+
+  .action-sheet-title {
+    color: #ffffff !important;
+    opacity: 0.8;
+    font-weight: 700;
+  }
+
+  .action-sheet-button {
+    color: #ffffff !important;
+  }
+
+  .action-sheet-cancel {
+    color: var(--ion-color-danger) !important;
+  }
+}
+
+/* Datetime Dark Theme Fix */
+ion-datetime {
+  --background: var(--roamie-surface);
+  --color: #ffffff;
+  border-radius: 24px;
+
+  &::part(calendar-day) {
+    color: #ffffff;
+  }
+
+  &::part(calendar-day active) {
+    background: var(--ion-color-primary);
+    color: #ffffff;
+  }
+
+  &::part(time-button) {
+    background: rgba(255, 255, 255, 0.05);
+    color: #ffffff;
+    border-radius: 8px;
+  }
+}
+
+/* Hide tab bar on desktop for customer pages */
+@media (min-width: 992px) {
+  .mobile-only {
+    display: none !important;
+  }
+}
+
+/* Exit App Toast */
+.exit-toast {
+  --background: rgba(27, 27, 58, 0.96);
+  --color: #ffffff;
+  --border-radius: 16px;
+  --box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  --border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(20px);
+  font-family: 'Outfit', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  --start: 16px;
+  --end: 16px;
+  --button-color: rgba(255, 255, 255, 0.5);
+}

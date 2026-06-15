@@ -1,0 +1,49 @@
+<ion-content class="ion-padding gradient-bg">
+  <div class="login-container">
+    <div class="login-content animate-up">
+      <div class="logo-area">
+        <div class="logo-box">
+          <ion-icon name="car-sport"></ion-icon>
+        </div>
+        <h1>ROAMIE</h1>
+        <p>Premium Mobility Solutions</p>
+      </div>
+
+      <div class="glass-panel login-card">
+        <div class="form-group">
+          <!-- Full Name (Only shown in Register Mode) -->
+          <ion-item lines="none" class="roamie-input animate-fade" *ngIf="isRegisterMode">
+            <ion-icon name="person-outline" slot="start"></ion-icon>
+            <ion-input label="Full Name" label-placement="floating" type="text" [(ngModel)]="name"></ion-input>
+          </ion-item>
+
+          <ion-item lines="none" class="roamie-input">
+            <ion-icon name="mail-outline" slot="start"></ion-icon>
+            <ion-input label="Email Address" label-placement="floating" type="email" [(ngModel)]="email"></ion-input>
+          </ion-item>
+
+          <ion-item lines="none" class="roamie-input">
+            <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
+            <ion-input label="Password" label-placement="floating" [type]="showPassword ? 'text' : 'password'" [(ngModel)]="password"></ion-input>
+            <ion-icon [name]="showPassword ? 'eye-off-outline' : 'eye-outline'" slot="end"
+              (click)="showPassword = !showPassword" style="cursor: pointer;"></ion-icon>
+          </ion-item>
+
+          <div class="forgot-wrapper" *ngIf="!isRegisterMode">
+            <ion-button fill="clear" size="small" class="forgot-link" (click)="openForgotPassword()">Forgot Password?</ion-button>
+          </div>
+
+          <ion-button expand="block" class="login-btn" (click)="isRegisterMode ? handleRegister() : handleLogin()" [disabled]="isLoading">
+            <span *ngIf="!isLoading">{{ isRegisterMode ? 'Create Account' : 'Sign In' }}</span>
+            <ion-spinner *ngIf="isLoading" name="crescent"></ion-spinner>
+          </ion-button>
+        </div>
+
+        <div class="login-footer">
+          <p *ngIf="!isRegisterMode">Don't have an account? <span class="highlight" (click)="toggleMode()" style="cursor: pointer;">Sign Up</span></p>
+          <p *ngIf="isRegisterMode">Already have an account? <span class="highlight" (click)="toggleMode()" style="cursor: pointer;">Sign In</span></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

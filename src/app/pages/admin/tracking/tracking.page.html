@@ -1,0 +1,69 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Live Fleet Tracking</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="tracking-layout">
+    <!-- Map Area (Mock) -->
+    <div class="map-container roamie-card">
+      <div class="mock-map">
+        <!-- Mock Map Layers -->
+        <div class="grid-overlay"></div>
+        
+        <!-- Moving Vehicle Markers -->
+        <div 
+          class="vehicle-marker" 
+          *ngFor="let v of vehicles"
+          [style.left.%]="v.x"
+          [style.top.%]="v.y">
+          <div class="marker-blob" [class]="v.status.toLowerCase()"></div>
+          <div class="marker-label">{{ v.carName }}</div>
+        </div>
+      </div>
+      
+      <div class="map-controls glass-panel">
+        <ion-button fill="clear" color="dark">
+          <ion-icon name="add-outline" slot="icon-only"></ion-icon>
+        </ion-button>
+        <div class="divider"></div>
+        <ion-button fill="clear" color="dark">
+          <ion-icon name="remove-outline" slot="icon-only"></ion-icon>
+        </ion-button>
+      </div>
+    </div>
+
+    <!-- Sidebar Info -->
+    <div class="tracking-sidebar">
+      <div class="filter-tabs">
+        <div class="tab" [class.active]="filter === 'all'" (click)="filter = 'all'">All</div>
+        <div class="tab" [class.active]="filter === 'moving'" (click)="filter = 'moving'">Moving</div>
+        <div class="tab" [class.active]="filter === 'stopped'" (click)="filter = 'stopped'">Stopped</div>
+      </div>
+
+      <div class="vehicle-list">
+        <div class="roamie-card vehicle-card" *ngFor="let v of filteredVehicles">
+          <div class="card-top">
+            <div class="status-indicator" [class]="v.status.toLowerCase()"></div>
+            <span class="name">{{ v.carName }}</span>
+            <span class="plate">{{ v.plate }}</span>
+          </div>
+          <div class="card-bottom">
+            <div class="data-item">
+              <ion-icon name="speedometer-outline"></ion-icon>
+              <span>{{ v.speed }} km/h</span>
+            </div>
+            <div class="data-item">
+              <ion-icon name="navigate-outline"></ion-icon>
+              <span>Active</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

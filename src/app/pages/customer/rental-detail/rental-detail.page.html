@@ -1,0 +1,142 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text="" color="light"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Rental Details</ion-title>
+    <ion-buttons slot="end" *ngIf="rental?.paymentStatus === 'Paid'">
+      <ion-button color="primary" (click)="downloadInvoice()">
+        <ion-icon name="download-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div *ngIf="rental" class="animate-up">
+    <!-- Status Card -->
+    <div class="status-banner" [class]="rental.status.toLowerCase()">
+      <div class="dot"></div>
+      <span>Booking Status: {{ rental.status }}</span>
+    </div>
+
+    <!-- Car Info Card -->
+    <div class="roamie-card main-info">
+      <div class="car-preview">
+        <img [src]="rental.carImage" alt="">
+        <div class="text">
+          <h2>{{ rental.carName }}</h2>
+          <p class="plate">{{ rental.plateNumber }}</p>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div class="meta-grid">
+        <div class="meta-item">
+          <label>Booking ID</label>
+          <span>{{ rental.id }}</span>
+        </div>
+        <div class="meta-item">
+          <label>Payment Method</label>
+          <span>{{ rental.paymentMethod || 'Transfer Bank Manual' }}</span>
+        </div>
+        <div class="meta-item">
+          <label>Payment Status</label>
+          <span [style.color]="rental.paymentStatus === 'Paid' ? '#2dd36f' : (rental.paymentStatus === 'Pending' ? '#f59e0b' : (rental.paymentStatus === 'Rejected' ? '#eb445a' : '#ffffff'))">
+            {{ rental.paymentStatus === 'Paid' ? 'Lunas' : (rental.paymentStatus === 'Pending' ? 'Menunggu Verifikasi' : (rental.paymentStatus === 'Rejected' ? 'Ditolak' : 'Belum Bayar')) }}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Schedule Info -->
+    <div class="section-title">Schedule Information</div>
+    <div class="roamie-card schedule-info">
+      <div class="time-block">
+        <div class="point">
+          <ion-icon name="calendar" color="primary"></ion-icon>
+          <div class="text">
+            <label>Pick-up Date</label>
+            <span>{{ rental.startDate | date:'dd MMM yyyy' }}</span>
+          </div>
+        </div>
+        <div class="line"></div>
+        <div class="point">
+          <ion-icon name="time" color="primary"></ion-icon>
+          <div class="text">
+            <label>Pick-up Time</label>
+            <span>{{ rental.startTime || '09:00' }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div class="duration-box">
+        <ion-icon name="hourglass-outline"></ion-icon>
+        <span>Total Duration: <strong>{{ rental.duration }} Days</strong></span>
+      </div>
+    </div>
+
+    <!-- Payment Summary -->
+    <div class="section-title">Payment Summary</div>
+    <div class="roamie-card billing-card">
+      <div class="bill-row">
+        <span>Rental Cost</span>
+        <span>Rp {{ (rental.totalPrice - 50000) | number }}</span>
+      </div>
+      <div class="bill-row">
+        <span>Service & Protection</span>
+        <span>Rp 50,000</span>
+      </div>
+      <div class="divider"></div>
+      <div class="bill-row total">
+        <span>Total Amount</span>
+        <span class="val">Rp {{ rental.totalPrice | number }}</span>
+      </div>
+    </div>
+
+    <!-- Live GPS Tracking -->
+    <div class="roamie-card gps-tracking-card" *ngIf="rental.paymentStatus === 'Paid'">
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem;">
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+          <ion-icon name="navigate" color="success" style="font-size: 1.5rem;"></ion-icon>
+          <div class="text">
+            <h3 style="margin: 0; font-size: 1rem; font-weight: 700;">Live GPS Tracking</h3>
+            <p style="margin: 2px 0 0; font-size: 0.78rem; color: #94a3b8;">Wajib aktif saat hari H penyewaan mobil</p>
+          </div>
+        </div>
+        <ion-toggle color="success" [(ngModel)]="isGpsTracking" (ionChange)="toggleGpsTracking($event)"></ion-toggle>
+      </div>
+      <div class="gps-status-info" *ngIf="isGpsTracking" style="background: rgba(45, 211, 111, 0.08); border: 1px solid rgba(45, 211, 111, 0.2); border-radius: 0.75rem; padding: 0.75rem; font-size: 0.8rem; color: #2dd36f; display: flex; align-items: center; gap: 0.5rem; animation: pulse 2s infinite;">
+        <ion-spinner name="crescent" color="success" style="width: 16px; height: 16px;"></ion-spinner>
+        <span>GPS Aktif: Mengirimkan koordinat lokasi Anda ke Admin...</span>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="actions">
+      <!-- Download Invoice -->
+      <ion-button 
+        expand="block" 
+        class="primary-btn" 
+        color="success" 
+        *ngIf="rental.paymentStatus === 'Paid'"
+        (click)="downloadInvoice()">
+        <ion-icon name="document-text-outline" slot="start"></ion-icon>
+        Unduh Invoice Pembayaran
+      </ion-button>
+      <ion-button 
+        expand="block" 
+        class="primary-btn" 
+        color="primary" 
+        *ngIf="rental.paymentStatus !== 'Paid'"
+        [routerLink]="['/customer/payment', rental.id.replace('#', '')]">
+        Lakukan Pembayaran
+      </ion-button>
+      <ion-button expand="block" class="primary-btn" fill="outline">
+        Contact Support
+      </ion-button>
+      <ion-button expand="block" fill="clear" color="danger" *ngIf="rental.status === 'Active' && rental.paymentStatus !== 'Paid'">
+        Cancel Booking
+      </ion-button>
+    </div>
+  </div>
+</ion-content>

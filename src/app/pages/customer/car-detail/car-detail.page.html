@@ -1,0 +1,94 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/customer/home" text="" color="dark"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Car Details</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="dark">
+        <ion-icon name="heart-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div *ngIf="car" class="animate-up">
+    <!-- Image Slider / Hero -->
+    <div class="hero-container">
+      <img [src]="car.image" alt="">
+      <div class="glass-tag">{{ car.type }}</div>
+    </div>
+
+    <div class="details-shell">
+      <div class="top-info">
+        <div class="name-brand">
+          <h1>{{ car.brand }} {{ car.model }}</h1>
+          <div class="rating">
+            <ion-icon name="star" [style.color]="car.rating !== '-' ? '#ffc409' : '#8a8a8f'"></ion-icon>
+            <span>{{ car.rating }} {{ car.rating !== '-' ? '(Reviews)' : '(No Reviews)' }}</span>
+          </div>
+        </div>
+        <div class="status-chip" [class]="car.status.toLowerCase()">
+          {{ car.status }}
+        </div>
+      </div>
+
+      <!-- Specs Horizontal Scroll -->
+      <div class="specs-scroll">
+        <div class="spec-card">
+          <ion-icon name="speedometer-outline"></ion-icon>
+          <span class="val">{{ car.transmission }}</span>
+          <span class="lab">Gearbox</span>
+        </div>
+        <div class="spec-card">
+          <ion-icon name="people-outline"></ion-icon>
+          <span class="val">{{ car.seats }}</span>
+          <span class="lab">Seats</span>
+        </div>
+        <div class="spec-card">
+          <ion-icon name="flame-outline"></ion-icon>
+          <span class="val">{{ car.fuel }}</span>
+          <span class="lab">Engine</span>
+        </div>
+        <div class="spec-card">
+          <ion-icon name="calendar-outline"></ion-icon>
+          <span class="val">{{ car.year }}</span>
+          <span class="lab">Year</span>
+        </div>
+      </div>
+
+      <div class="section">
+        <h3>Vehicle Specification</h3>
+        <p class="description">
+          {{ car.description }}
+        </p>
+      </div>
+
+      <div class="section">
+        <h3>Key Features</h3>
+        <div class="features-grid">
+          <div class="f-item"><ion-icon name="bluetooth"></ion-icon> Audio</div>
+          <div class="f-item"><ion-icon name="snow"></ion-icon> AC</div>
+          <div class="f-item"><ion-icon name="shield-checkmark"></ion-icon> Safety</div>
+          <div class="f-item"><ion-icon name="wifi"></ion-icon> Wi-Fi</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>
+
+<ion-footer class="ion-no-border" *ngIf="car">
+  <div class="sticky-cta glass-panel">
+    <div class="price-box">
+      <span class="total">Rp {{ car.price | number }}</span>
+      <span class="unit">/ day</span>
+    </div>
+    <ion-button 
+      class="book-btn" 
+      [routerLink]="['/customer/booking', car.id]"
+      [disabled]="car.status !== 'Available'">
+      Rent Now
+    </ion-button>
+  </div>
+</ion-footer>

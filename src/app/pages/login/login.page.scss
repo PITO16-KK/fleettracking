@@ -1,0 +1,159 @@
+.login-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100%;
+}
+
+.login-content {
+  width: 100%;
+  max-width: 400px;
+}
+
+.logo-area {
+  text-align: center;
+  margin-bottom: 40px;
+  color: white;
+
+  .logo-box {
+    width: 64px;
+    height: 64px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+    color: var(--ion-color-primary);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    margin: 0 auto 16px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+  }
+
+  h1 {
+    font-size: 36px;
+    font-weight: 800;
+    letter-spacing: 6px;
+    margin: 0;
+    color: white;
+  }
+
+  p {
+    font-size: 13px;
+    opacity: 0.7;
+    font-weight: 500;
+    margin-top: 4px;
+    color: white;
+  }
+}
+
+.login-card {
+  padding: 30px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.roamie-input {
+  --background: rgba(255, 255, 255, 0.08);
+  --border-radius: 14px;
+  margin-bottom: 16px;
+  --color: #ffffff;
+  --placeholder-color: rgba(255, 255, 255, 0.4);
+  --highlight-color-focused: white;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px; // Menambahkan border-radius agar garis (border) ikut melengkung
+  overflow: hidden; // Memastikan background tidak bocor keluar sudut yang melengkung
+  transition: border 0.3s ease;
+
+  &:focus-within {
+    border: 1px solid rgba(255, 255, 255, 0.5);
+  }
+
+  ion-icon {
+    color: white;
+    opacity: 0.8;
+  }
+
+  ion-input {
+    font-weight: 500;
+    --padding-start: 12px;
+    --label-color: rgba(255, 255, 255, 0.6);
+    --label-color-focused: #ffffff;
+  }
+
+  ion-label {
+    color: rgba(255, 255, 255, 0.6) !important;
+  }
+}
+
+.login-btn {
+  margin-top: 24px;
+  height: 56px;
+  --border-radius: 14px;
+  --background: white;
+  --color: #000000; // Mengubah ke hitam pekat agar kontras maksimal di atas putih
+  font-weight: 900; // Membuat font lebih tebal (ultra bold)
+  font-size: 16px;
+  --box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease;
+
+  span {
+    color: #000000 !important;
+  }
+
+  ion-spinner {
+    color: #000000;
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+.forgot-wrapper {
+  text-align: center;
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.forgot-link {
+  --color: rgba(255, 255, 255, 0.7);
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.2px;
+}
+
+.login-footer {
+  text-align: center;
+  margin-top: 24px;
+
+  p {
+    color: white;
+    font-size: 13px;
+    opacity: 0.8;
+    font-weight: 600;
+
+    .highlight {
+      color: #00e5ff; // Warna accent cerah untuk kontras
+      margin-left: 5px;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+  }
+}
+
+.animate-fade {
+  animation: fadeIn 0.4s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

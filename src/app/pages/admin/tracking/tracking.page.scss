@@ -1,0 +1,164 @@
+.tracking-layout {
+  display: grid;
+  grid-template-columns: 1fr 350px;
+  height: 100%;
+  gap: 20px;
+  padding: 20px;
+
+  @media (max-width: 992px) {
+    grid-template-columns: 1fr;
+    grid-template-rows: 400px 1fr;
+  }
+}
+
+.map-container {
+  margin: 0;
+  position: relative;
+  background: #e5e9f2;
+  overflow: hidden;
+  border: 1px solid rgba(0,0,0,0.05);
+
+  .mock-map {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background-image: 
+      linear-gradient(rgba(0,0,0,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,0,0,0.05) 1px, transparent 1px);
+    background-size: 50px 50px;
+  }
+}
+
+.vehicle-marker {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: all 2s linear;
+  z-index: 100;
+
+  .marker-blob {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 3px solid white;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    
+    &.moving { background: var(--ion-color-success); }
+    &.stopped { background: var(--ion-color-danger); }
+    &.idle { background: var(--ion-color-warning); }
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      border-radius: 50%;
+      background: inherit;
+      animation: pulse 2s infinite;
+      z-index: -1;
+    }
+  }
+
+  .marker-label {
+    margin-top: 8px;
+    background: white;
+    padding: 4px 10px;
+    border-radius: 8px;
+    font-size: 10px;
+    font-weight: 800;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    white-space: nowrap;
+  }
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 0.8; }
+  100% { transform: scale(3); opacity: 0; }
+}
+
+.map-controls {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  padding: 4px;
+  
+  .divider { height: 1px; background: rgba(0,0,0,0.1); margin: 0 8px; }
+}
+
+.tracking-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.filter-tabs {
+  display: flex;
+  background: var(--roamie-surface);
+  padding: 4px;
+  border-radius: 12px;
+  box-shadow: var(--roamie-shadow);
+
+  .tab {
+    flex: 1;
+    text-align: center;
+    padding: 10px;
+    font-size: 13px;
+    font-weight: 700;
+    border-radius: 10px;
+    cursor: pointer;
+    color: var(--ion-color-medium);
+    transition: all 0.3s ease;
+
+    &.active {
+      background: var(--ion-color-primary);
+      color: white;
+    }
+  }
+}
+
+.vehicle-list {
+  flex: 1;
+  overflow-y: auto;
+  
+  .vehicle-card {
+    margin: 0 0 12px;
+    padding: 16px;
+
+    .card-top {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+
+      .status-indicator {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        &.moving { background: var(--ion-color-success); }
+        &.stopped { background: var(--ion-color-danger); }
+      }
+
+      .name { font-weight: 800; font-size: 15px; flex: 1; color: #ffffff; }
+      .plate { font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.6); }
+    }
+
+    .card-bottom {
+      display: flex;
+      gap: 20px;
+
+      .data-item {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 12px;
+        font-weight: 600;
+        color: rgba(255,255,255,0.7);
+        
+        ion-icon { color: var(--ion-color-primary); font-size: 16px; }
+      }
+    }
+  }
+}

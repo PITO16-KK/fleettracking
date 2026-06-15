@@ -1,0 +1,147 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-title>My Rentals</ion-title>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-segment [(ngModel)]="filter" (ionChange)="updateFilter()" mode="ios">
+      <ion-segment-button value="all">
+        <ion-label>All</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="active">
+        <ion-label>Active</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="completed">
+        <ion-label>Completed</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <div class="rental-list animate-up">
+    <div class="roamie-card rental-card" *ngFor="let rental of filteredRentals">
+      <div class="card-header">
+        <div class="status-badge" [class]="rental.status.toLowerCase()">
+          {{ rental.status }}
+        </div>
+        <div class="status-badge payment-status-badge" [class]="rental.paymentStatus?.toLowerCase() || 'unpaid'">
+          {{ rental.paymentStatus === 'Paid' ? 'Lunas' : (rental.paymentStatus === 'Pending' ? 'Menunggu Verifikasi' : (rental.paymentStatus === 'Rejected' ? 'Ditolak' : 'Belum Bayar')) }}
+        </div>
+        <span class="id">#{{ rental.id }}</span>
+      </div>
+      
+      <div class="card-content">
+        <img [src]="rental.carImage" alt="">
+        <div class="info">
+          <h3>{{ rental.carName }}</h3>
+          <p class="plate">{{ rental.plateNumber }}</p>
+          <div class="details">
+            <div class="detail-item">
+              <ion-icon name="calendar-outline"></ion-icon>
+              <span>{{ rental.startDate }}</span>
+            </div>
+            <div class="detail-item">
+              <ion-icon name="time-outline"></ion-icon>
+              <span>{{ rental.duration }} Days</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- GPS Tracking Section -->
+      <div *ngIf="rental.paymentStatus === 'Paid'" class="gps-section">
+        <div class="gps-row">
+          <div class="gps-label">
+            <ion-icon name="navigate-outline" color="success"></ion-icon>
+            <span>Lacak GPS Unit Mobil</span>
+          </div>
+          <ion-toggle [checked]="isGpsActive(rental.carId)" (ionChange)="toggleGps(rental.carId, $event)" mode="ios"></ion-toggle>
+        </div>
+        <div class="gps-status" *ngIf="isGpsActive(rental.carId)">
+          <span>📡 GPS Aktif: Mengirimkan posisi real-time...</span>
+        </div>
+      </div>
+
+      <div class="card-footer">
+        <div class="price">
+          <span class="label">{{ rental.paymentStatus === 'Paid' ? 'Total Paid' : 'Total Tagihan' }}</span>
+          <span class="amount">Rp {{ rental.totalPrice | number }}</span>
+        </div>
+        <div class="footer-actions">
+          <ion-button 
+            fill="solid" 
+            color="warning" 
+            size="small" 
+            class="rate-btn"
+            *ngIf="rental.status.toLowerCase() === 'completed' && !rental.isRated"
+            (click)="openRatingModal(rental)">
+            Rate Car
+          </ion-button>
+          <ion-button 
+            fill="solid" 
+            color="primary" 
+            size="small" 
+            *ngIf="rental.paymentStatus !== 'Paid'"
+            [routerLink]="['/customer/payment', rental.id.replace('#', '')]">
+            Bayar
+          </ion-button>
+          <ion-button fill="clear" size="small" [routerLink]="['/rental-detail', rental.id]">Details</ion-button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Empty State -->
+  <div class="empty-state" *ngIf="filteredRentals.length === 0">
+    <ion-icon name="calendar-clear-outline"></ion-icon>
+    <h3>No rentals found</h3>
+    <p>You haven't made any bookings in this category.</p>
+    <ion-button class="button-round" routerLink="/customer/home">Book a Car</ion-button>
+  </div>
+
+  <!-- ==================== RATING & REVIEW MODAL ==================== -->
+  <div class="rating-backdrop" *ngIf="showRatingModal" (click)="showRatingModal = false">
+    <div class="rating-modal animate-scale" (click)="$event.stopPropagation()">
+      <div class="rating-header">
+        <div class="logo-circle">
+          <ion-icon name="star" color="warning"></ion-icon>
+        </div>
+        <h3>Rate Your Trip</h3>
+        <p>How was your experience renting the <strong>{{ selectedRentalForRating?.carName }}</strong>?</p>
+      </div>
+
+      <div class="rating-body">
+        <div class="stars-container">
+          <ion-icon 
+            *ngFor="let star of [1, 2, 3, 4, 5]" 
+            [name]="ratingValue >= star ? 'star' : 'star-outline'" 
+            [class.active]="ratingValue >= star" 
+            (click)="ratingValue = star">
+          </ion-icon>
+        </div>
+        
+        <div class="input-group">
+          <label>Write a Review</label>
+          <textarea 
+            placeholder="Share details of your rental experience (cleanliness, comfort, performance)..." 
+            [(ngModel)]="reviewText" 
+            rows="4">
+          </textarea>
+        </div>
+      </div>
+
+      <div class="rating-footer">
+        <button class="btn-primary" (click)="submitRating()">
+          Submit Review
+        </button>
+        <button class="btn-text" (click)="showRatingModal = false">
+          Maybe Later
+        </button>
+      </div>
+    </div>
+  </div>
+</ion-content>

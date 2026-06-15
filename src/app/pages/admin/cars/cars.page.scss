@@ -1,0 +1,94 @@
+.table-card {
+  margin: 0;
+  padding: 24px;
+}
+
+.table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 24px;
+
+  .search-box {
+    flex: 1;
+    ion-searchbar { --background: var(--roamie-bg); padding: 0; }
+  }
+
+  .filters {
+    width: 200px;
+    ion-select {
+      background: var(--roamie-bg);
+      border-radius: 12px;
+      --padding-start: 16px;
+      --padding-end: 16px;
+    }
+  }
+}
+
+.table-responsive {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  
+  th {
+    text-align: left;
+    padding: 12px;
+    color: #ffffff;
+    opacity: 0.7;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--roamie-bg);
+  }
+
+  td {
+    padding: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    border-bottom: 1px solid var(--roamie-bg);
+    vertical-align: middle;
+  }
+}
+
+.car-thumb {
+  width: 60px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.car-name { color: var(--ion-color-dark); font-weight: 700; }
+.year { font-size: 11px; color: var(--ion-color-medium); }
+
+.badge-plate {
+  background: #222;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  
+  &.available { background: rgba(45, 211, 111, 0.1); color: var(--ion-color-success); }
+  &.on-going { background: rgba(255, 196, 9, 0.1); color: #d4a000; }
+  &.booked { background: rgba(91, 108, 255, 0.1); color: var(--ion-color-primary); }
+  &.maintenance { background: rgba(235, 68, 90, 0.1); color: var(--ion-color-danger); }
+}
+
+ion-button {
+  --padding-start: 16px;
+  --padding-end: 16px;
+  height: 40px;
+}

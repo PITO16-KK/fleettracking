@@ -1,0 +1,140 @@
+<ion-content [fullscreen]="true">
+  <!-- Modern Header Shell -->
+  <div class="home-shell">
+    <div class="header-minimal animate-up">
+      <div class="top-bar">
+        <div class="greeting">
+          <p>Hello, {{ user?.name || 'Explorer' }}</p>
+          <h2>Find your drive</h2>
+        </div>
+        <div class="profile-trigger" routerLink="/customer/profile">
+          <img [src]="user?.avatar" alt="Profile">
+        </div>
+      </div>
+
+      <div class="search-bar-modern">
+        <div class="input-wrapper glass-panel">
+          <ion-icon name="search-outline"></ion-icon>
+          <input 
+            type="text" 
+            placeholder="Search premium cars..." 
+            [(ngModel)]="searchTerm"
+            (input)="applyFilters()">
+        </div>
+      </div>
+    </div>
+
+    <!-- Categories Section -->
+    <div class="content-section animate-up">
+      <div class="section-header">
+        <h3>Categories</h3>
+      </div>
+      <div class="category-pills">
+        <div 
+          class="pill" 
+          *ngFor="let cat of categories" 
+          [class.active]="selectedCategory === cat"
+          (click)="selectCategory(cat)">
+          {{ cat }}
+        </div>
+      </div>
+
+      <!-- Featured Cards -->
+      <div class="section-header mt-30">
+        <h3>Featured Fleet</h3>
+        <ion-button fill="clear" size="small" class="see-all-btn" (click)="seeAll()">See All</ion-button>
+      </div>
+
+      <div class="featured-scroll">
+        <div 
+          class="featured-card" 
+          *ngFor="let car of featuredCars"
+          [routerLink]="['/customer/car', car.id]">
+          <div class="img-box">
+            <img [src]="car.image" alt="">
+            <div class="status-overlay">{{ car.status }}</div>
+          </div>
+          <div class="info-box">
+            <div class="meta">
+              <span class="brand">{{ car.brand }}</span>
+              <div class="rating">
+                <ion-icon name="star" [style.color]="car.rating !== '-' ? '#ffc409' : '#8a8a8f'"></ion-icon>
+                <span>{{ car.rating }}</span>
+              </div>
+            </div>
+            <h4>{{ car.model }}</h4>
+            <div class="price-box">
+              <span class="val">Rp {{ car.price | number }}</span>
+              <span class="unit">/day</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Grid for secondary items -->
+      <div class="section-header mt-30">
+        <h3>Nearby Options</h3>
+      </div>
+      <div class="mini-grid">
+        <div class="mini-card roamie-card animate-up" *ngFor="let car of nearbyCars" [routerLink]="['/customer/car', car.id]">
+          <img [src]="car.image" alt="">
+          <div class="mini-info">
+            <h5>{{ car.brand }} {{ car.model }}</h5>
+            <span>Rp {{ car.price | number }}/day</span>
+          </div>
+          <div class="mini-action">
+            <ion-icon name="chevron-forward-outline"></ion-icon>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating Chatbot FAB -->
+  <div class="chatbot-fab" (click)="toggleChatbot()">
+    <ion-icon name="chatbubbles-outline"></ion-icon>
+  </div>
+
+  <!-- Chatbot Container Window -->
+  <div class="chatbot-container" *ngIf="showChatbot">
+    <div class="chatbot-header">
+      <div class="chatbot-header-info">
+        <div class="chatbot-header-avatar">🤖</div>
+        <div class="title-container">
+          <span class="chatbot-header-title">Asisten AI Roamie</span>
+          <span class="chatbot-header-subtitle">
+            <span class="status-dot"></span>
+            Online • 24/7 CS AI
+          </span>
+        </div>
+      </div>
+      <button class="chatbot-close-btn" (click)="closeChatbot()">
+        <ion-icon name="close-outline"></ion-icon>
+      </button>
+    </div>
+    
+    <div class="chatbot-messages" id="chatbotMessagesHome">
+      <div *ngFor="let msg of chatbotMessages" class="chat-bubble" [class.ai]="msg.role === 'model'" [class.user]="msg.role === 'user'">
+        {{ msg.content }}
+      </div>
+      <!-- Typing Indicator -->
+      <div class="typing-indicator" *ngIf="isChatbotLoading">
+        <div class="typing-dot"></div>
+        <div class="typing-dot"></div>
+        <div class="typing-dot"></div>
+      </div>
+    </div>
+    
+    <div class="chatbot-footer">
+      <input 
+        type="text" 
+        [(ngModel)]="userMessage" 
+        placeholder="Tulis pesan Anda..." 
+        (keyup.enter)="sendChatbotMessage()" 
+        autocomplete="off">
+      <button class="chatbot-send-btn" [disabled]="!userMessage.trim()" (click)="sendChatbotMessage()">
+        <ion-icon name="send-outline"></ion-icon>
+      </button>
+    </div>
+  </div>
+</ion-content>
