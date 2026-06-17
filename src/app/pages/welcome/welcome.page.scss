@@ -324,19 +324,20 @@
     align-items: center;
     gap: 12px;
     padding: 4px 6px;
-    color: #4b5563;
-    font-size: 13px;
-    font-weight: 600;
+    color: #eab308 !important;
+    font-size: 13.5px;
+    font-weight: 700;
     transition: opacity 0.3s ease;
 
     &.disabled {
       opacity: 0.5;
+      color: #ca8a04 !important;
     }
 
     ion-checkbox {
       --size: 20px;
       --border-radius: 6px;
-      --border-color: #d1d5db;
+      --border-color: #000000;
       --checkbox-background-checked: #facc15;
       --border-color-checked: #facc15;
       --checkmark-color: #1e1b4b;
@@ -344,6 +345,11 @@
 
     span {
       user-select: none;
+      color: #eab308 !important;
+    }
+
+    &.disabled span {
+      color: #ca8a04 !important;
     }
   }
 
@@ -449,34 +455,73 @@
 
 // KEYFRAME ANIMATIONS
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 @keyframes pulseGlow {
-  0% { opacity: 0.6; transform: scale(0.9); }
-  100% { opacity: 1; transform: scale(1.1); }
+  0% {
+    opacity: 0.6;
+    transform: scale(0.9);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
 }
 
 @keyframes logoPop {
-  0% { opacity: 0; transform: scale(0.8); }
-  100% { opacity: 1; transform: scale(1); }
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 @keyframes dotBlink {
-  0% { opacity: 0.3; }
-  100% { opacity: 1; }
+  0% {
+    opacity: 0.3;
+  }
+
+  100% {
+    opacity: 1;
+  }
 }
 
 @keyframes floatIllustration {
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
-  100% { transform: translateY(0px); }
+  0% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
 }
 
 @keyframes bounceDown {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(3px); }
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(3px);
+  }
 }
 
 .animate-fade {
@@ -484,6 +529,13 @@
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

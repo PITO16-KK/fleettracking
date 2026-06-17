@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { map, tap, catchError } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
+import { AuthService } from './auth.service';
 
 export interface Car {
   id: string;
@@ -68,16 +69,36 @@ export class MockDataService {
   private rentalsSubject = new BehaviorSubject<Rental[]>([]);
   public rentals$ = this.rentalsSubject.asObservable();
 
-  constructor(@Optional() private http?: HttpClient) {
+  constructor(
+    @Optional() private http?: HttpClient,
+    @Optional() private authService?: AuthService
+  ) {
     // Only attempt network loads when HttpClient is available (tests may omit it)
     if (this.http) {
-      this.loadCars();
-      this.loadRentals();
+      if (this.authService) {
+        this.authService.currentUser$.subscribe(user => {
+          if (user) {
+            this.loadCars();
+            this.loadRentals();
+          } else {
+            this.carsSubject.next([]);
+            this.rentalsSubject.next([]);
+          }
+        });
+      } else {
+        this.loadCars();
+        this.loadRentals();
+      }
     }
   }
 
   loadRentals() {
     if (!this.http) return;
+    const token = localStorage.getItem('roamie_token');
+    if (!token) {
+      this.rentalsSubject.next([]);
+      return;
+    }
     this.http.get<any>(`${this.apiUrl}/my-rentals`).pipe(
       map(response => {
         if (response && response.status === 'success' && Array.isArray(response.data)) {
@@ -145,6 +166,11 @@ export class MockDataService {
 
   loadCars() {
     if (!this.http) return;
+    const token = localStorage.getItem('roamie_token');
+    if (!token) {
+      this.carsSubject.next([]);
+      return;
+    }
 
     this.http.get<any>(`${this.apiUrl}/cars`).pipe(
       map(response => {

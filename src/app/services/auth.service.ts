@@ -43,24 +43,7 @@ export class AuthService {
       return throwError(() => new Error('HttpClient not available'));
     }
 
-    // Check if there is a local password override for this email
-    if (this.checkPasswordOverride(credentials.email, credentials.password)) {
-      const mockUser: User = {
-        id: '999',
-        name: credentials.email.split('@')[0].toUpperCase(),
-        email: credentials.email,
-        role: credentials.email.toLowerCase().includes('admin') ? 'admin' : 'customer',
-        avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(credentials.email)}&background=9D50BB&color=ffffff&size=128&bold=true`,
-        phone: '+62 812 3456 7890',
-        address: 'Jl. Sudirman No. 123, Jakarta',
-        token: 'mock-session-token-' + Date.now()
-      };
-      this.setSession(mockUser);
-      return new Observable<User>(observer => {
-        observer.next(mockUser);
-        observer.complete();
-      });
-    }
+
 
     return this.http.post<any>(`${this.apiUrl}/login`, credentials).pipe(
       map(response => {
@@ -143,24 +126,7 @@ export class AuthService {
     );
   }
 
-  // Password overrides helpers
-  savePasswordOverride(email: string, newPassword: string) {
-    const overrides = this.getPasswordOverrides();
-    overrides[email.toLowerCase()] = newPassword;
-    localStorage.setItem('roamie_password_overrides', JSON.stringify(overrides));
-  }
 
-  getPasswordOverrides(): { [email: string]: string } {
-    const data = localStorage.getItem('roamie_password_overrides');
-    return data ? JSON.parse(data) : {};
-  }
-
-  checkPasswordOverride(email: string, password?: string): boolean {
-    if (!password) return false;
-    const overrides = this.getPasswordOverrides();
-    const storedPassword = overrides[email.toLowerCase()];
-    return storedPassword === password;
-  }
 
 
   private setSession(user: User) {

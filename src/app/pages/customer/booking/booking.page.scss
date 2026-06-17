@@ -9,7 +9,7 @@
   background: var(--roamie-surface);
   padding: 16px;
   border-radius: 20px;
-  border: 1px solid rgba(255,255,255,0.05);
+  border: 1px solid rgba(255, 255, 255, 0.05);
   margin-bottom: 30px;
 
   img {
@@ -20,15 +20,27 @@
   }
 
   .text {
-    h4 { font-size: 18px; font-weight: 800; margin: 0; color: #ffffff; }
-    p { font-size: 13px; color: #ffffff; margin: 4px 0 0; font-weight: 600; opacity: 0.8; }
+    h4 {
+      font-size: 18px;
+      font-weight: 800;
+      margin: 0;
+      color: #ffffff;
+    }
+
+    p {
+      font-size: 13px;
+      color: #ffffff;
+      margin: 4px 0 0;
+      font-weight: 600;
+      opacity: 0.8;
+    }
   }
 }
 
 h3 {
   font-size: 18px;
   font-weight: 800;
-  color: #ffffff;
+  color: #000000;
   margin: 30px 0 16px;
 }
 
@@ -46,7 +58,7 @@ h3 {
     gap: 15px;
 
     &:active {
-      background: rgba(255,255,255,0.05);
+      background: rgba(255, 255, 255, 0.05);
     }
 
     &.no-click:active {
@@ -72,7 +84,7 @@ h3 {
 
       label {
         font-size: 12px;
-        color: rgba(255,255,255,0.5);
+        color: rgba(0, 0, 0, 0.5);
         font-weight: 600;
         margin-bottom: 4px;
       }
@@ -80,7 +92,7 @@ h3 {
       span {
         font-size: 16px;
         font-weight: 800;
-        color: #ffffff;
+        color: #000000;
       }
     }
 
@@ -99,7 +111,7 @@ h3 {
 
   .schedule-divider {
     height: 1px;
-    background: rgba(255,255,255,0.05);
+    background: rgba(255, 255, 255, 0.05);
     margin: 0 20px;
   }
 }
@@ -110,9 +122,9 @@ h3 {
   gap: 15px;
 
   button {
-    background: rgba(255,255,255,0.1);
+    background: rgba(255, 255, 255, 0.1);
     border: none;
-    color: white;
+    color: rgb(103, 40, 129);
     width: 32px;
     height: 32px;
     border-radius: 10px;
@@ -147,7 +159,7 @@ h3 {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border: 1px solid rgba(255,255,255,0.05);
+  border: 1px solid rgba(255, 255, 255, 0.05);
 
   .label-group {
     display: flex;
@@ -156,8 +168,11 @@ h3 {
     font-weight: 700;
     font-size: 15px;
     color: #ffffff;
-    
-    ion-icon { color: var(--ion-color-primary); font-size: 20px; }
+
+    ion-icon {
+      color: var(--ion-color-primary);
+      font-size: 20px;
+    }
   }
 }
 
@@ -169,8 +184,14 @@ h3 {
   padding: 6px;
   border-radius: 14px;
 
-  span { font-weight: 800; font-size: 14px; color: #ffffff; min-width: 60px; text-align: center; }
-  
+  span {
+    font-weight: 800;
+    font-size: 14px;
+    color: #ffffff;
+    min-width: 60px;
+    text-align: center;
+  }
+
   button {
     width: 32px;
     height: 32px;
@@ -181,9 +202,11 @@ h3 {
     font-size: 20px;
     font-weight: 800;
     cursor: pointer;
-    border: 1px solid rgba(255,255,255,0.1);
-    
-    &:active { transform: scale(0.9); }
+    border: 1px solid rgba(255, 255, 255, 0.1);
+
+    &:active {
+      transform: scale(0.9);
+    }
   }
 }
 
@@ -191,29 +214,36 @@ h3 {
   background: var(--roamie-surface);
   padding: 24px;
   border-radius: 24px;
-  border: 1px solid rgba(255,255,255,0.05);
+  border: 1px solid rgba(255, 255, 255, 0.05);
 
   .bill-row {
     display: flex;
     justify-content: space-between;
     margin-bottom: 14px;
     font-weight: 600;
-    color: #ffffff;
+    color: #000000;
     opacity: 0.8;
     font-size: 14px;
 
     &.grand-total {
       margin-top: 20px;
       margin-bottom: 0;
-      color: #ffffff;
+      color: #000000;
       font-weight: 800;
       font-size: 16px;
-      
-      .price { font-size: 20px; color: var(--ion-color-primary); }
+
+      .price {
+        font-size: 20px;
+        color: var(--ion-color-primary);
+      }
     }
   }
 
-  .divider { height: 1px; background: rgba(255,255,255,0.1); margin: 20px 0; }
+  .divider {
+    height: 1px;
+    background: rgba(255, 255, 255, 0.1);
+    margin: 20px 0;
+  }
 }
 
 .method-card {
@@ -225,14 +255,32 @@ h3 {
   border-radius: 20px;
   border: 2px solid transparent;
 
-  &.active { border-color: var(--ion-color-primary); background: rgba(157, 80, 187, 0.05); }
+  &.active {
+    border-color: var(--ion-color-primary);
+    background: rgba(157, 80, 187, 0.05);
+  }
 
-  ion-icon { font-size: 28px; color: var(--ion-color-primary); }
-  
+  ion-icon {
+    font-size: 28px;
+    color: var(--ion-color-primary);
+  }
+
   .info {
     flex: 1;
-    span { font-weight: 800; font-size: 15px; color: #ffffff; }
-    p { font-size: 12px; color: #ffffff; margin-top: 2px; font-weight: 600; opacity: 0.7; }
+
+    span {
+      font-weight: 800;
+      font-size: 15px;
+      color: #000000;
+    }
+
+    p {
+      font-size: 12px;
+      color: #000000;
+      margin-top: 2px;
+      font-weight: 600;
+      opacity: 0.7;
+    }
   }
 }
 
@@ -281,8 +329,11 @@ h3 {
   color: #ffffff;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 
-  h2, h3, h4, h5 {
-    color: #ffffff;
+  h2,
+  h3,
+  h4,
+  h5 {
+    color: #000000;
     margin: 0;
   }
 }
@@ -311,11 +362,12 @@ h3 {
 
     .title-details {
       h2 {
-        color: #ffffff !important;
+        color: #000000 !important;
         font-size: 20px;
         font-weight: 800;
         letter-spacing: -0.5px;
       }
+
       p {
         font-size: 11px;
         color: rgba(255, 255, 255, 0.5);
@@ -462,9 +514,20 @@ h3 {
       justify-content: center;
       font-size: 20px;
 
-      &.orange { background: rgba(243, 156, 18, 0.15); color: #F39C12; }
-      &.teal   { background: rgba(26, 188, 156, 0.15); color: #1ABC9C; }
-      &.blue   { background: rgba(157, 80, 187, 0.15); color: var(--ion-color-primary); }
+      &.orange {
+        background: rgba(243, 156, 18, 0.15);
+        color: #F39C12;
+      }
+
+      &.teal {
+        background: rgba(26, 188, 156, 0.15);
+        color: #1ABC9C;
+      }
+
+      &.blue {
+        background: rgba(157, 80, 187, 0.15);
+        color: var(--ion-color-primary);
+      }
     }
 
     .channel-info {
@@ -621,6 +684,7 @@ h3 {
       color: rgba(255, 255, 255, 0.6);
       margin-bottom: 4px;
     }
+
     p {
       font-size: 11px;
       color: rgba(255, 255, 255, 0.4);
@@ -686,9 +750,26 @@ h3 {
         height: 32px;
         border: 4px solid #1a1a2e;
 
-        &.top-left    { top: 0; left: 0; border-right: none; border-bottom: none; }
-        &.top-right   { top: 0; right: 0; border-left: none; border-bottom: none; }
-        &.bottom-left { bottom: 0; left: 0; border-right: none; border-top: none; }
+        &.top-left {
+          top: 0;
+          left: 0;
+          border-right: none;
+          border-bottom: none;
+        }
+
+        &.top-right {
+          top: 0;
+          right: 0;
+          border-left: none;
+          border-bottom: none;
+        }
+
+        &.bottom-left {
+          bottom: 0;
+          left: 0;
+          border-right: none;
+          border-top: none;
+        }
       }
 
       .qr-dots-pattern {
@@ -712,7 +793,7 @@ h3 {
           font-weight: 900;
           color: #9D50BB;
           border: 2px solid #1a1a2e;
-          box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
         }
       }
     }
@@ -740,9 +821,17 @@ h3 {
 }
 
 @keyframes qrScan {
-  0%   { top: 5%; }
-  50%  { top: 90%; }
-  100% { top: 5%; }
+  0% {
+    top: 5%;
+  }
+
+  50% {
+    top: 90%;
+  }
+
+  100% {
+    top: 5%;
+  }
 }
 
 // CC Form
@@ -779,7 +868,9 @@ h3 {
       color: #ffffff;
       outline: none;
 
-      &::placeholder { color: rgba(255,255,255,0.3); }
+      &::placeholder {
+        color: rgba(255, 255, 255, 0.3);
+      }
 
       &:focus {
         border-color: var(--ion-color-primary);
@@ -792,7 +883,9 @@ h3 {
     display: flex;
     gap: 12px;
 
-    .flex-1 { flex: 1; }
+    .flex-1 {
+      flex: 1;
+    }
   }
 
   .card-icons-indicator {
@@ -832,7 +925,7 @@ h3 {
     border-radius: 20px;
     overflow: hidden;
     border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
 
     .dialog-header {
       background: rgba(157, 80, 187, 0.15);
@@ -846,6 +939,7 @@ h3 {
         font-size: 20px;
         color: var(--ion-color-primary);
       }
+
       h4 {
         color: #ffffff !important;
         font-size: 14px;
@@ -908,11 +1002,18 @@ h3 {
         &.btn-confirm {
           color: var(--ion-color-primary);
           border-right: 1px solid rgba(255, 255, 255, 0.08);
-          &:active { background: rgba(255,255,255,0.04); }
+
+          &:active {
+            background: rgba(255, 255, 255, 0.04);
+          }
         }
+
         &.btn-cancel {
           color: #E74C3C;
-          &:active { background: rgba(255,255,255,0.04); }
+
+          &:active {
+            background: rgba(255, 255, 255, 0.04);
+          }
         }
       }
     }
@@ -1031,27 +1132,64 @@ h3 {
       opacity: 0;
       animation: explodeSparkles 1s cubic-bezier(0.1, 0.8, 0.3, 1) .6s forwards;
 
-      &.one   { top: 10%; left: 80%; }
-      &.two   { top: 80%; left: 10%; background: var(--ion-color-primary); }
-      &.three { top: 50%; left: 90%; background: #F1C40F; }
+      &.one {
+        top: 10%;
+        left: 80%;
+      }
+
+      &.two {
+        top: 80%;
+        left: 10%;
+        background: var(--ion-color-primary);
+      }
+
+      &.three {
+        top: 50%;
+        left: 90%;
+        background: #F1C40F;
+      }
     }
   }
 }
 
 @keyframes strokeSuccess {
-  100% { stroke-dashoffset: 0; }
+  100% {
+    stroke-dashoffset: 0;
+  }
 }
+
 @keyframes fillSuccess {
-  100% { box-shadow: inset 0px 0px 0px 40px rgba(46, 204, 113, 0.1); }
+  100% {
+    box-shadow: inset 0px 0px 0px 40px rgba(46, 204, 113, 0.1);
+  }
 }
+
 @keyframes scaleSuccess {
-  0%, 100% { transform: none; }
-  50% { transform: scale3d(1.1, 1.1, 1); }
+
+  0%,
+  100% {
+    transform: none;
+  }
+
+  50% {
+    transform: scale3d(1.1, 1.1, 1);
+  }
 }
+
 @keyframes explodeSparkles {
-  0%   { transform: scale(0.3); opacity: 0; }
-  50%  { opacity: 1; }
-  100% { transform: scale(1.5) translate(15px, -15px); opacity: 0; }
+  0% {
+    transform: scale(0.3);
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(1.5) translate(15px, -15px);
+    opacity: 0;
+  }
 }
 
 .receipt-card {
@@ -1111,6 +1249,13 @@ h3 {
 }
 
 @keyframes scaleIn {
-  from { transform: scale(0.9); opacity: 0; }
-  to   { transform: scale(1); opacity: 1; }
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
 }

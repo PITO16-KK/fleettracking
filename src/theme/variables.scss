@@ -16,33 +16,116 @@
   --ion-color-secondary-shade: #e07d49;
   --ion-color-secondary-tint: #ff9964;
 
-  /** Roamie Dark Premium **/
+  /** =========================================
+   *  ROAMIE DARK THEME (Default — always)
+   * ========================================= **/
   --roamie-bg: #0F0C29;
+  --roamie-bg-2: #1a1540;
   --roamie-surface: #1B1B3A;
+  --roamie-surface-2: #242456;
   --roamie-gradient: linear-gradient(135deg, #9D50BB 0%, #6E48AA 100%);
   --roamie-glass: rgba(255, 255, 255, 0.05);
+  --roamie-glass-border: rgba(255, 255, 255, 0.10);
+  --roamie-card-border: rgba(255, 255, 255, 0.06);
+  --roamie-divider: rgba(255, 255, 255, 0.08);
   --roamie-shadow: 0 10px 40px 0 rgba(0, 0, 0, 0.4);
   --roamie-radius: 24px;
+
+  /* Text — dark theme (white hierarchy) */
+  --roamie-text-color: #ffffff;
+  --roamie-text-secondary: rgba(255, 255, 255, 0.65);
+  --roamie-text-muted: rgba(255, 255, 255, 0.38);
+  --roamie-medium-color: rgba(255, 255, 255, 0.65);
+
+  /* Inputs — dark */
+  --roamie-input-bg: rgba(255, 255, 255, 0.04);
+  --roamie-input-border: rgba(255, 255, 255, 0.08);
+  --roamie-input-icon: rgba(255, 255, 255, 0.40);
+  --roamie-placeholder: rgba(255, 255, 255, 0.30);
+
+  /* Sessions & Misc — dark */
+  --roamie-toggle-divider: rgba(255, 255, 255, 0.08);
+  --roamie-session-bg: rgba(255, 255, 255, 0.03);
+  --roamie-session-border: rgba(255, 255, 255, 0.05);
+  --roamie-session-icon-bg: rgba(255, 255, 255, 0.06);
+  --roamie-session-text: rgba(255, 255, 255, 0.42);
+
+  /* Toolbar — dark */
+  --roamie-toolbar-bg: #0F0C29;
+  --roamie-toolbar-color: #ffffff;
 }
 
+/** =========================================
+ *  ROAMIE LIGHT THEME
+ *  Latar: ungu muda → putih bersih
+ *  Teks utama: ungu gelap #2d0a5e
+ *  Aksen: kuning gold #eab308 / #ca8a04
+ *  TIDAK ADA teks putih — semua gelap & kontras
+ * ========================================= **/
+body.light-theme {
+  /* Backgrounds */
+  --roamie-bg: #ede9ff;
+  --roamie-bg-2: #ddd5f7;
+  --roamie-surface: #f9f7ff;
+  --roamie-surface-2: #ede9ff;
+  --roamie-gradient: linear-gradient(135deg, #7c3aed 0%, #9D50BB 100%);
+  --roamie-glass: rgba(255, 255, 255, 0.75);
+  --roamie-glass-border: rgba(109, 40, 217, 0.20);
+  --roamie-card-border: rgba(109, 40, 217, 0.14);
+  --roamie-divider: rgba(109, 40, 217, 0.14);
+  --roamie-shadow: 0 8px 32px rgba(109, 40, 217, 0.14);
+  --roamie-radius: 24px;
+
+  /* Text — light theme (dark purple hierarchy) */
+  --roamie-text-color: #2d0a5e;          /* Ungu gelap — teks utama */
+  --roamie-text-secondary: #5b2d8e;      /* Ungu sedang — teks sub */
+  --roamie-text-muted: #8b60c0;          /* Ungu muda — teks tertiary */
+  --roamie-medium-color: #5b2d8e;
+
+  /* Inputs — light */
+  --roamie-input-bg: rgba(109, 40, 217, 0.06);
+  --roamie-input-border: rgba(109, 40, 217, 0.22);
+  --roamie-input-icon: #7c3aed;
+  --roamie-placeholder: rgba(91, 45, 142, 0.45);
+
+  /* Sessions & Misc — light */
+  --roamie-toggle-divider: rgba(109, 40, 217, 0.14);
+  --roamie-session-bg: rgba(109, 40, 217, 0.05);
+  --roamie-session-border: rgba(109, 40, 217, 0.12);
+  --roamie-session-icon-bg: rgba(109, 40, 217, 0.10);
+  --roamie-session-text: #7c5fa0;
+
+  /* Toolbar — light */
+  --roamie-toolbar-bg: #ede9ff;
+  --roamie-toolbar-color: #2d0a5e;
+
+  /* Ionic token overrides */
+  --ion-background-color: #ede9ff;
+  --ion-text-color: #2d0a5e;
+  --ion-color-primary: #7c3aed;
+  --ion-color-primary-shade: #6d28d9;
+  --ion-color-primary-tint: #8b5cf6;
+}
+
+/** Always-on Ionic base overrides **/
 body {
   --ion-background-color: var(--roamie-bg);
-  --ion-text-color: #ffffff;
+  --ion-text-color: var(--roamie-text-color);
 }
 
 ion-content {
   --background: var(--roamie-bg);
-  --color: #ffffff;
+  --color: var(--roamie-text-color);
 }
 
 ion-card, .roamie-card {
   --background: var(--roamie-surface);
-  --color: #ffffff;
+  --color: var(--roamie-text-color);
   background: var(--roamie-surface);
-  color: #ffffff;
+  color: var(--roamie-text-color);
 }
 
 ion-item {
   --background: var(--roamie-surface);
-  --color: #ffffff;
+  --color: var(--roamie-text-color);
 }

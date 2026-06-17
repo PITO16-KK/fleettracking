@@ -258,8 +258,7 @@ export class LoginPage implements OnInit {
               return false;
             }
             
-            this.authService.savePasswordOverride(email, data.password);
-            this.presentToast('✓ Password updated! You can now log in with your new password.', 'success');
+            this.presentToast('✓ Password reset simulated successfully (Local override disabled for security).', 'success');
             return true;
           }
         }

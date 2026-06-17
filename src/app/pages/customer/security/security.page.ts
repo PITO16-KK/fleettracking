@@ -17,6 +17,7 @@ export class SecurityPage implements OnInit {
   biometricEnabled = false;
   rememberMeEnabled = true;
   twoFactorEnabled = false;
+  lightModeEnabled = false;
   
   // Password visibility triggers
   showCurrentPassword = false;
@@ -57,6 +58,7 @@ export class SecurityPage implements OnInit {
     this.biometricEnabled = localStorage.getItem('roamie_biometric') === 'true';
     this.rememberMeEnabled = localStorage.getItem('roamie_remember_me') !== 'false';
     this.twoFactorEnabled = localStorage.getItem('roamie_2fa') === 'true';
+    this.lightModeEnabled = localStorage.getItem('theme_light') === 'true';
   }
 
   passwordMatchValidator(g: FormGroup) {
@@ -90,9 +92,9 @@ export class SecurityPage implements OnInit {
       this.isLoading = false;
 
       if (this.currentUser) {
-        // Save password override in AuthService
-        this.authService.savePasswordOverride(this.currentUser.email, newPassword);
-        this.presentToast('✓ Password berhasil diperbarui!', 'success');
+        // In a real application, this would call a backend API.
+        // For simulation purposes, we display a success message.
+        this.presentToast('✓ Password berhasil diperbarui (Simulasi)!', 'success');
         this.passwordForm.reset();
       } else {
         this.presentToast('Gagal memperbarui password. Sesi telah berakhir.', 'danger');
@@ -109,6 +111,21 @@ export class SecurityPage implements OnInit {
     } else if (key === 'biometric' && value) {
       this.presentToast('Sidik Jari / Face ID diaktifkan.', 'success');
     }
+  }
+
+  setTheme(isLight: boolean) {
+    this.lightModeEnabled = isLight;
+    localStorage.setItem('theme_light', isLight ? 'true' : 'false');
+    document.body.classList.toggle('light-theme', isLight);
+    this.presentToast(
+      isLight ? '☀️ Mode Terang diaktifkan.' : '🌙 Mode Gelap diaktifkan.',
+      'success'
+    );
+  }
+
+  /** @deprecated kept for back-compat if needed */
+  toggleTheme(event: any) {
+    this.setTheme(event.detail.checked);
   }
 
   async revokeSession(sessionId: number, deviceName: string) {

@@ -23,37 +23,45 @@
 
 ion-content {
   --background: var(--roamie-bg);
-  --color: #ffffff;
-  color: #ffffff;
+  --color: var(--roamie-text-color);
+  color: var(--roamie-text-color);
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-span,
+/* Default all text elements to follow theme */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--roamie-text-color);
+}
+
+p {
+  color: var(--roamie-text-secondary);
+}
+
+span {
+  color: inherit;
+}
+
 ion-label,
 div {
-  color: #ffffff;
+  color: var(--roamie-text-color);
 }
 
 .ion-color-medium {
-  --ion-color-base: rgba(255, 255, 255, 0.7) !important;
-  color: rgba(255, 255, 255, 0.7) !important;
+  --ion-color-base: var(--roamie-medium-color) !important;
+  color: var(--roamie-medium-color) !important;
 }
 
+/* ============================================
+ * CARDS
+ * ============================================ */
 .roamie-card {
   background: var(--roamie-surface);
   border-radius: var(--roamie-radius);
   box-shadow: var(--roamie-shadow);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--roamie-card-border);
   margin: 16px;
   overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  color: white;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+  color: var(--roamie-text-color);
 
   &.clickable:active {
     transform: scale(0.98);
@@ -61,14 +69,17 @@ div {
 }
 
 .glass-panel {
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--roamie-glass);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--roamie-glass-border);
   border-radius: var(--roamie-radius);
-  color: white;
+  color: var(--roamie-text-color);
 }
 
+/* ============================================
+ * TYPOGRAPHY UTILITIES
+ * ============================================ */
 .gradient-text {
   background: var(--roamie-gradient);
   -webkit-background-clip: text;
@@ -86,7 +97,14 @@ div {
   color: white;
 }
 
-/* Rounded Buttons */
+body.light-theme .gradient-bg {
+  background: linear-gradient(135deg, #ede9ff 0%, #f5f0ff 50%, #fdf6ff 100%);
+  color: var(--roamie-text-color);
+}
+
+/* ============================================
+ * BUTTONS
+ * ============================================ */
 ion-button {
   --border-radius: 12px;
   --box-shadow: none;
@@ -99,7 +117,9 @@ ion-button {
   }
 }
 
-/* Custom Tabs (Mobile) */
+/* ============================================
+ * TAB BAR
+ * ============================================ */
 ion-tab-bar {
   --background: var(--roamie-surface);
   --border: none;
@@ -107,13 +127,16 @@ ion-tab-bar {
   padding-bottom: env(safe-area-inset-bottom);
   border-top-left-radius: 30px;
   border-top-right-radius: 30px;
-  box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.08);
   margin-top: -30px;
   position: relative;
   z-index: 10;
+  border-top: 1px solid var(--roamie-card-border);
 }
 
-/* Animations */
+/* ============================================
+ * ANIMATIONS
+ * ============================================ */
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -130,43 +153,50 @@ ion-tab-bar {
   animation: fadeInUp 0.6s ease-out forwards;
 }
 
-/* Floating labels for forms */
+/* ============================================
+ * FORM ITEMS
+ * ============================================ */
 ion-item {
   --border-radius: 12px;
-  --background: var(--roamie-surface);
-  --color: #ffffff;
+  --background: var(--roamie-input-bg, var(--roamie-surface));
+  --color: var(--roamie-text-color);
   margin-bottom: 12px;
   --padding-start: 16px;
   --inner-padding-end: 16px;
   --border-color: transparent;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.07);
 
-  ion-label,
+  ion-label {
+    color: var(--roamie-text-color) !important;
+  }
+
   ion-icon {
-    color: #ffffff !important;
+    color: var(--roamie-input-icon, var(--roamie-text-color)) !important;
   }
 
   &.item-has-focus {
     --border-color: var(--ion-color-primary);
-    box-shadow: 0 4px 12px rgba(91, 108, 255, 0.1);
+    box-shadow: 0 4px 12px rgba(157, 80, 187, 0.15);
   }
 }
 
-/* ActionSheet Dark Theme Fix */
+/* ============================================
+ * ACTION SHEET
+ * ============================================ */
 ion-action-sheet {
   --background: var(--roamie-surface);
-  --color: #ffffff;
-  --button-color: #ffffff;
+  --color: var(--roamie-text-color);
+  --button-color: var(--roamie-text-color);
   --button-color-selected: var(--ion-color-primary);
 
   .action-sheet-title {
-    color: #ffffff !important;
+    color: var(--roamie-text-color) !important;
     opacity: 0.8;
     font-weight: 700;
   }
 
   .action-sheet-button {
-    color: #ffffff !important;
+    color: var(--roamie-text-color) !important;
   }
 
   .action-sheet-cancel {
@@ -174,14 +204,16 @@ ion-action-sheet {
   }
 }
 
-/* Datetime Dark Theme Fix */
+/* ============================================
+ * DATETIME
+ * ============================================ */
 ion-datetime {
   --background: var(--roamie-surface);
-  --color: #ffffff;
+  --color: var(--roamie-text-color);
   border-radius: 24px;
 
   &::part(calendar-day) {
-    color: #ffffff;
+    color: var(--roamie-text-color);
   }
 
   &::part(calendar-day active) {
@@ -190,31 +222,244 @@ ion-datetime {
   }
 
   &::part(time-button) {
-    background: rgba(255, 255, 255, 0.05);
-    color: #ffffff;
+    background: var(--roamie-glass);
+    color: var(--roamie-text-color);
     border-radius: 8px;
   }
 }
 
-/* Hide tab bar on desktop for customer pages */
+/* ============================================
+ * TOOLBAR — theme-aware
+ * ============================================ */
+ion-toolbar {
+  --background: var(--roamie-toolbar-bg, var(--roamie-bg));
+  --color: var(--roamie-toolbar-color, var(--roamie-text-color));
+
+  ion-title {
+    color: var(--roamie-toolbar-color, var(--roamie-text-color));
+  }
+
+  ion-button {
+    --color: var(--roamie-toolbar-color, var(--roamie-text-color));
+  }
+
+  ion-icon {
+    color: var(--roamie-toolbar-color, var(--roamie-text-color));
+  }
+}
+
+/* ============================================
+ * RESPONSIVE / DESKTOP
+ * ============================================ */
 @media (min-width: 992px) {
   .mobile-only {
     display: none !important;
   }
 }
 
-/* Exit App Toast */
+/* ============================================
+ * EXIT TOAST
+ * ============================================ */
 .exit-toast {
-  --background: rgba(27, 27, 58, 0.96);
-  --color: #ffffff;
+  --background: var(--roamie-surface);
+  --color: var(--roamie-text-color);
   --border-radius: 16px;
-  --box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-  --border: 1px solid rgba(255, 255, 255, 0.08);
+  --box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  --border: 1px solid var(--roamie-card-border);
   backdrop-filter: blur(20px);
   font-family: 'Outfit', sans-serif;
   font-size: 15px;
   font-weight: 500;
   --start: 16px;
   --end: 16px;
-  --button-color: rgba(255, 255, 255, 0.5);
+  --button-color: var(--roamie-medium-color);
+}
+
+/* ============================================
+ * LIGHT THEME — Global forced overrides
+ * Ensures zero white text bleeds through
+ * ============================================ */
+body.light-theme {
+
+  /* All text elements */
+  h1, h2, h3, h4, h5, h6 {
+    color: var(--roamie-text-color) !important;
+  }
+
+  p {
+    color: var(--roamie-text-secondary) !important;
+  }
+
+  span:not(.gradient-text) {
+    color: inherit;
+  }
+
+  ion-label {
+    color: var(--roamie-text-color) !important;
+  }
+
+  /* Ionic content & background */
+  ion-content {
+    --background: var(--roamie-bg);
+    --color: var(--roamie-text-color);
+    color: var(--roamie-text-color);
+  }
+
+  /* Tab bar in light mode */
+  ion-tab-bar {
+    --background: #f9f7ff;
+    border-top: 1px solid rgba(109, 40, 217, 0.14);
+    box-shadow: 0 -4px 16px rgba(109, 40, 217, 0.10);
+  }
+
+  ion-tab-button {
+    --color: #8b60c0;
+    --color-selected: #7c3aed;
+
+    ion-label {
+      color: var(--ion-color-primary) !important;
+    }
+
+    ion-icon {
+      color: var(--ion-color-primary);
+    }
+  }
+
+  /* Toolbar */
+  ion-toolbar {
+    --background: var(--roamie-toolbar-bg);
+    --color: var(--roamie-toolbar-color);
+
+    ion-title {
+      color: var(--roamie-toolbar-color) !important;
+    }
+
+    ion-button {
+      --color: var(--roamie-toolbar-color);
+    }
+
+    ion-icon {
+      color: var(--roamie-toolbar-color) !important;
+    }
+
+    ion-back-button {
+      --color: var(--roamie-toolbar-color);
+    }
+  }
+
+  /* Cards */
+  .roamie-card {
+    background: var(--roamie-surface);
+    border-color: var(--roamie-card-border);
+    box-shadow: var(--roamie-shadow);
+
+    h1, h2, h3, h4, h5, h6 {
+      color: var(--roamie-text-color) !important;
+    }
+
+    p, span {
+      color: var(--roamie-text-secondary) !important;
+    }
+  }
+
+  /* Glass panels */
+  .glass-panel {
+    background: rgba(255, 255, 255, 0.80);
+    border-color: rgba(109, 40, 217, 0.18);
+
+    h1, h2, h3, h4, h5, h6 {
+      color: var(--roamie-text-color) !important;
+    }
+
+    p {
+      color: var(--roamie-text-secondary) !important;
+    }
+  }
+
+  /* Form items */
+  ion-item {
+    --background: var(--roamie-input-bg);
+    --color: var(--roamie-text-color);
+    border-color: var(--roamie-input-border);
+
+    ion-label {
+      color: var(--roamie-text-color) !important;
+    }
+
+    ion-icon {
+      color: var(--roamie-input-icon) !important;
+    }
+
+    ion-input {
+      --color: var(--roamie-text-color) !important;
+      --placeholder-color: var(--roamie-placeholder) !important;
+    }
+
+    ion-select {
+      color: var(--roamie-text-color) !important;
+    }
+  }
+
+  /* Stat values & labels — show in yellow gold */
+  .value {
+    color: #ca8a04 !important;    /* Kuning gold gelap — kontras di ungu muda */
+  }
+
+  .label {
+    color: var(--roamie-text-secondary) !important;
+  }
+
+  /* Badges */
+  ion-badge {
+    &[color="danger"]   { --background: #dc2626; }
+    &[color="success"]  { --background: #16a34a; }
+    &[color="warning"]  { --background: #ca8a04; }
+    &[color="primary"]  { --background: #7c3aed; }
+  }
+
+  /* Medium color override */
+  .ion-color-medium,
+  [color="medium"] {
+    color: var(--roamie-text-muted) !important;
+  }
+
+  /* Header icons and chevrons */
+  ion-icon[color="medium"] {
+    color: var(--roamie-text-muted) !important;
+  }
+
+  ion-icon[color="primary"] {
+    color: #7c3aed !important;
+  }
+
+  ion-icon[color="secondary"] {
+    color: #e07d49 !important;
+  }
+
+  ion-icon[color="tertiary"] {
+    color: #7c3aed !important;
+  }
+
+  ion-icon[color="success"] {
+    color: #16a34a !important;
+  }
+
+  /* Action sheet */
+  ion-action-sheet {
+    --background: var(--roamie-surface);
+    --color: var(--roamie-text-color);
+    --button-color: var(--roamie-text-color);
+  }
+
+  /* Datetime */
+  ion-datetime {
+    --background: var(--roamie-surface);
+    --color: var(--roamie-text-color);
+  }
+
+  /* Gradient background override */
+  .gradient-bg {
+    background: linear-gradient(135deg, #ede9ff 0%, #f5f0ff 60%, #fdf4ff 100%);
+    color: var(--roamie-text-color);
+  }
 }

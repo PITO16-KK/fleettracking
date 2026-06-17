@@ -4,8 +4,8 @@
   align-items: center;
   justify-content: center;
   height: 60vh;
-  color: rgba(255, 255, 255, 0.6);
-  
+  color: rgba(0, 0, 0, 0.6);
+
   ion-spinner {
     --color: var(--ion-color-primary);
     width: 40px;
@@ -15,7 +15,7 @@
 }
 
 .summary-card {
-  background: rgba(255, 255, 255, 0.03);
+  background: rgb(255, 255, 255);
   border: 1px solid rgba(255, 255, 255, 0.05);
   border-radius: 16px;
   padding: 20px;
@@ -31,6 +31,7 @@
       font-weight: 800;
       color: #fff;
     }
+
     p {
       margin: 0;
       font-size: 13px;
@@ -41,17 +42,17 @@
 
   .price-info {
     text-align: right;
-    
+
     label {
       display: block;
       font-size: 11px;
-      color: rgba(255, 255, 255, 0.4);
+      color: rgba(0, 0, 0, 0.4);
       text-transform: uppercase;
       font-weight: 700;
       letter-spacing: 0.5px;
       margin-bottom: 4px;
     }
-    
+
     .price {
       font-size: 20px;
       font-weight: 800;
@@ -72,12 +73,12 @@
     align-items: center;
     gap: 10px;
     margin-bottom: 15px;
-    
+
     ion-icon {
       font-size: 22px;
       color: var(--ion-color-primary);
     }
-    
+
     h4 {
       margin: 0;
       font-size: 15px;
@@ -139,15 +140,15 @@
     color: rgba(255, 255, 255, 0.7);
     font-size: 13px;
     font-weight: 500;
-    
+
     li {
       margin-bottom: 8px;
       line-height: 1.5;
-      
+
       &:last-child {
         margin-bottom: 0;
       }
-      
+
       strong {
         color: #fff;
       }
@@ -170,9 +171,9 @@
     margin-bottom: 15px;
     --padding-start: 16px;
     --padding-end: 16px;
-    
+
     ion-label {
-      color: rgba(255, 255, 255, 0.4) !important;
+      color: rgba(0, 0, 0, 0.4) !important;
       font-weight: 700;
       font-size: 11px;
       letter-spacing: 0.5px;
@@ -212,24 +213,24 @@
       align-items: center;
       text-align: center;
       padding: 20px;
-      
+
       ion-icon {
         font-size: 36px;
-        color: rgba(255, 255, 255, 0.4);
+        color: rgba(0, 0, 0, 0.4);
         margin-bottom: 8px;
       }
-      
+
       span {
         font-size: 14px;
         font-weight: 700;
-        color: #fff;
+        color: #000000;
         margin-bottom: 4px;
       }
-      
+
       p {
         margin: 0;
         font-size: 11px;
-        color: rgba(255, 255, 255, 0.4);
+        color: rgba(0, 0, 0, 0.4);
         font-weight: 500;
       }
     }
@@ -237,7 +238,7 @@
     .preview-container {
       width: 100%;
       height: 100%;
-      
+
       img {
         width: 100%;
         height: 100%;
@@ -260,7 +261,7 @@
         font-size: 12px;
         font-weight: 700;
         backdrop-filter: blur(4px);
-        
+
         ion-icon {
           font-size: 16px;
         }
@@ -298,7 +299,7 @@
     align-items: center;
     justify-content: center;
     margin-bottom: 20px;
-    
+
     ion-icon {
       font-size: 44px;
     }
@@ -337,7 +338,8 @@
     padding: 0 10px;
   }
 
-  .uploaded-details, .success-details {
+  .uploaded-details,
+  .success-details {
     width: 100%;
     background: rgba(255, 255, 255, 0.02);
     border: 1px solid rgba(255, 255, 255, 0.04);
@@ -369,7 +371,7 @@
       strong {
         font-weight: 700;
       }
-      
+
       a {
         color: var(--ion-color-primary);
         text-decoration: none;
@@ -387,7 +389,7 @@
       padding: 4px 8px;
       border-radius: 4px;
       letter-spacing: 0.5px;
-      
+
       &.lunas {
         background: rgba(45, 211, 111, 0.15);
         color: var(--ion-color-success);
@@ -411,9 +413,9 @@
     .btn-refresh {
       --box-shadow: 0 4px 10px rgba(245, 158, 11, 0.2);
     }
-    
+
     .btn-back {
-      --color: rgba(255, 255, 255, 0.6);
+      --color: rgb(255, 255, 255);
       font-weight: 600;
     }
   }
@@ -429,7 +431,7 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 1px;
-  color: rgba(255, 255, 255, 0.4);
+  color: rgba(0, 0, 0, 0.4);
   margin-bottom: 12px;
   margin-top: 5px;
 }
@@ -442,7 +444,7 @@
 }
 
 .method-btn {
-  background: rgba(255, 255, 255, 0.02);
+  background: rgb(255, 255, 255);
   border: 1.5px solid rgba(255, 255, 255, 0.05);
   border-radius: 14px;
   padding: 14px 8px;
@@ -484,7 +486,7 @@
 
   .method-label {
     font-size: 10px;
-    color: rgba(255, 255, 255, 0.4);
+    color: rgba(0, 0, 0, 0.4);
     font-weight: 500;
   }
 }
@@ -561,7 +563,7 @@
 
       .label {
         font-size: 11px;
-        color: rgba(255, 255, 255, 0.4);
+        color: rgba(0, 0, 0, 0.4);
         font-weight: 600;
       }
 
@@ -569,7 +571,7 @@
         font-size: 18px;
         font-weight: 800;
         letter-spacing: 1px;
-        color: #fff;
+        color: #000000;
       }
     }
 
@@ -584,7 +586,7 @@
 
   .account-name-label {
     font-size: 12px;
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba(0, 0, 0, 0.5);
     margin-bottom: 18px;
 
     strong {
@@ -603,14 +605,14 @@
       gap: 10px;
       align-items: flex-start;
       font-size: 12px;
-      color: rgba(255, 255, 255, 0.6);
+      color: rgba(0, 0, 0, 0.6);
       line-height: 1.4;
 
       .step-num {
         width: 18px;
         height: 18px;
         border-radius: 50%;
-        background: rgba(99, 102, 241, 0.1);
+        background: rgba(255, 255, 255, 0.1);
         border: 1px solid rgba(99, 102, 241, 0.2);
         display: flex;
         align-items: center;
@@ -649,7 +651,7 @@
     &.border-dana {
       border: 2px solid #118EEA;
     }
-    
+
     &.border-qris {
       border: 2px solid #fff;
     }
@@ -705,14 +707,14 @@
 .select-method-note {
   text-align: center;
   padding: 30px 20px;
-  background: rgba(255, 255, 255, 0.01);
+  background: rgb(255, 255, 255);
   border: 1px dashed rgba(255, 255, 255, 0.08);
   border-radius: 16px;
   color: rgba(255, 255, 255, 0.4);
   font-size: 13px;
   line-height: 1.6;
   margin-top: 15px;
-  
+
   p {
     margin: 0;
   }
@@ -723,6 +725,7 @@
     opacity: 0;
     transform: translateY(8px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);

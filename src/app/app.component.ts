@@ -34,6 +34,7 @@ export class AppComponent implements OnInit {
 
   async ngOnInit() {
     await this.platform.ready();
+    this.initTheme();
 
     // Hide splash screen after Angular is fully loaded
     try {
@@ -44,6 +45,13 @@ export class AppComponent implements OnInit {
 
     // Register back button handler
     this.initBackButton();
+  }
+
+  private initTheme() {
+    // Only activate light theme if the user has explicitly enabled it.
+    // Default is always dark mode (no system preference detection).
+    const isLight = localStorage.getItem('theme_light') === 'true';
+    document.body.classList.toggle('light-theme', isLight);
   }
 
   private initBackButton() {

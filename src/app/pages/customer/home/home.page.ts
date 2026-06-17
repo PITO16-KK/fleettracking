@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MockDataService, Car } from '../../../services/mock-data.service';
 import { AuthService, User } from '../../../services/auth.service';
+import { Geolocation, PermissionStatus } from '@capacitor/geolocation';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -25,6 +27,7 @@ export class HomePage implements OnInit {
     { role: 'model', content: 'Halo! Saya Asisten AI Roamie. Ada yang bisa saya bantu mengenai persyaratan sewa, tata cara pembayaran, atau kendala pemesanan mobil Anda?' }
   ];
 
+  // Default fallback: Jakarta
   userLocation = {
     latitude: -6.200000,
     longitude: 106.816666
@@ -33,7 +36,8 @@ export class HomePage implements OnInit {
   constructor(
     private mockData: MockDataService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private toastCtrl: ToastController
   ) { }
 
   ngOnInit() {
@@ -49,24 +53,53 @@ export class HomePage implements OnInit {
     });
   }
 
-  private tryAcquireLocation() {
-    if (!navigator.geolocation) {
-      return;
-    }
+  /**
+   * Requests Android runtime location permission via Capacitor Geolocation,
+   * then fetches the current position. Falls back to Jakarta coords silently.
+   */
+  private async tryAcquireLocation() {
+    try {
+      // Step 1: Check current permission status
+      let status: PermissionStatus = await Geolocation.checkPermissions();
 
-    navigator.geolocation.getCurrentPosition(
-      position => {
-        this.userLocation = {
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude
-        };
-        this.applyFilters();
-      },
-      () => {
-        // Keep fallback location if permission denied or unavailable.
-      },
-      { maximumAge: 60000, timeout: 5000 }
-    );
+      // Step 2: If not granted, request from user
+      if (status.location !== 'granted') {
+        status = await Geolocation.requestPermissions();
+      }
+
+      if (status.location !== 'granted') {
+        // User denied — keep fallback location, show a soft toast
+        this.showLocationDeniedToast();
+        return;
+      }
+
+      // Step 3: Get position
+      const position = await Geolocation.getCurrentPosition({
+        enableHighAccuracy: true,
+        timeout: 10000
+      });
+
+      this.userLocation = {
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude
+      };
+
+      this.applyFilters();
+    } catch (err: any) {
+      // Geolocation unavailable on this device/emulator — fallback silently
+      console.warn('[GPS] Unavailable or timed out:', err?.message ?? err);
+    }
+  }
+
+  private async showLocationDeniedToast() {
+    const toast = await this.toastCtrl.create({
+      message: '📍 Izin lokasi ditolak. Mobil ditampilkan tanpa urutan jarak.',
+      duration: 3500,
+      position: 'bottom',
+      color: 'warning',
+      cssClass: 'exit-toast'
+    });
+    await toast.present();
   }
 
   selectCategory(cat: string) {

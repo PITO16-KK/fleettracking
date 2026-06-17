@@ -86,8 +86,8 @@
     <!-- Toggles Section -->
     <div class="glass-panel security-card mt-20">
       <div class="card-header">
-        <ion-icon name="shield-half-outline" class="header-icon"></ion-icon>
-        <h3>Preferensi Otentikasi</h3>
+        <ion-icon name="options-outline" class="header-icon"></ion-icon>
+        <h3>Preferensi Aplikasi</h3>
       </div>
 
       <div class="toggle-row">
@@ -128,6 +128,55 @@
           [checked]="twoFactorEnabled" 
           (ionChange)="togglePreference('2fa', $event)">
         </ion-toggle>
+      </div>
+    </div>
+
+    <!-- Theme Switcher Card -->
+    <div class="glass-panel security-card mt-20 theme-switcher-card">
+      <div class="card-header">
+        <ion-icon name="color-palette-outline" class="header-icon"></ion-icon>
+        <h3>Tampilan Aplikasi</h3>
+      </div>
+      <p class="theme-desc">Pilih tema yang nyaman untuk mata Anda.</p>
+
+      <div class="theme-toggle-row">
+        <!-- Dark Mode -->
+        <button 
+          class="theme-btn" 
+          [class.active]="!lightModeEnabled"
+          (click)="setTheme(false)"
+          id="btn-dark-mode">
+          <div class="theme-btn-icon">
+            <ion-icon name="moon"></ion-icon>
+          </div>
+          <span>Mode Gelap</span>
+        </button>
+
+        <!-- Custom Toggle Switch -->
+        <button 
+          class="theme-pill-toggle" 
+          [class.light]="lightModeEnabled"
+          (click)="setTheme(!lightModeEnabled)"
+          id="btn-theme-toggle"
+          aria-label="Toggle theme">
+          <span class="pill-icon moon-icon">🌙</span>
+          <span class="pill-track">
+            <span class="pill-thumb"></span>
+          </span>
+          <span class="pill-icon sun-icon">☀️</span>
+        </button>
+
+        <!-- Light Mode -->
+        <button 
+          class="theme-btn" 
+          [class.active]="lightModeEnabled"
+          (click)="setTheme(true)"
+          id="btn-light-mode">
+          <div class="theme-btn-icon">
+            <ion-icon name="sunny"></ion-icon>
+          </div>
+          <span>Mode Terang</span>
+        </button>
       </div>
     </div>
 
